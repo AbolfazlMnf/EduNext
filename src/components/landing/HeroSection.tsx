@@ -41,7 +41,7 @@ function HeroSection() {
         </div>
       </section>
       <div className="mx-auto  bg-[#ffff] rounded shadow w-[75%] relative bottom-8 ">
-        <div className="flex md:flex-row flex-col py-2 px-5 md:px-20 justify-start md:justify-between md:items-center">
+        <div className="flex md:flex-row flex-col py-2 px-5 md:px-20 justify-center md:justify-between md:items-center">
           <div className="flex gap-3 items-center ">
             <h1 className=" text-[24px] md:text-[32px] font-bold text-[#3d1dbf] ">
               12k+
