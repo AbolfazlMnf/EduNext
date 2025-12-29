@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Container from "../container/Container";
+import { Button } from "../ui/button";
 
 function HeroSection() {
   return (
@@ -13,27 +14,30 @@ function HeroSection() {
           priority
         />
         <div className="absolute inset-0 bg-black/40 -z-10"></div>
-        <div className="absolute inset-0 mt-35">
+        <div className="absolute inset-0 mt-6 md:mt-35">
           <Container>
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="">
-                <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              <div className="w-[67%] md:w-full">
+                <h1 className="text-3xl md:text-6xl font-bold mb-6">
                   Learn Without Limits
                 </h1>
 
-                <p className="text-xl mb-8">
+                <p className="md:text-xl mb-8">
                   Access thousands of courses from industry experts. Build
                   skills, earn certificates, and advance your career.
                 </p>
 
                 <div className="flex gap-4">
-                  <button className="p-3 rounded-xl text-white font-bold bg-[#3d1dbf]">
+                  <Button className="py-5 font-bold text-md ">
                     Browse Courses
-                  </button>
+                  </Button>
 
-                  <button className="p-3 rounded-xl font-bold bg-[#eeee]">
+                  <Button
+                    variant="secondary"
+                    className="py-5 text-md  font-bold"
+                  >
                     Get Started
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
