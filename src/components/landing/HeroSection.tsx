@@ -17,8 +17,8 @@ function HeroSection() {
         />
         <div className="absolute inset-0 bg-black/40 -z-10"></div>
         <div className="absolute inset-0 mt-6 lg:mt-35">
-          <div className="grid lg:grid-cols-2 gap-12 items-center lg:px-20 px-6 py-8 ">
-            <div className="w-[67%] lg:w-full">
+          <div className="grid lg:grid-cols-2 gap-12 items-center lg:px-25 px-6 py-8 ">
+            <div className="w-[60%] lg:w-full">
               <h1 className="text-3xl lg:text-6xl font-bold mb-6">
                 Learn Without Limits
               </h1>
