@@ -44,7 +44,7 @@ function FooterSections({ sections, copyright }: Tprops) {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 "
         >
           {sections.map((section, index) => (
             <div key={index}>
