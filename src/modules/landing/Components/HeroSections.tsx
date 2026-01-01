@@ -1,8 +1,7 @@
+import Layouts from "@/components/Layouts/Layouts";
 import Image from "next/image";
-import Container from "../container/Container";
-import { Button } from "../ui/button";
-import HeroCount from "./Numbers/HeroCount";
-import Layouts from "../Layouts/Layouts";
+import HeroCount from "./HeroCount";
+import { Button } from "@/components/ui/button";
 
 function HeroSection() {
   return (

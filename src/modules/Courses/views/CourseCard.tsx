@@ -1,11 +1,10 @@
-import Container from "@/components/container/Container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { ChevronRight } from "lucide-react";
 
-export default function CourseCard() {
+export default function CourseCard({ classNames }: { classNames: string }) {
   return (
-    <Card className="md:w-[30%] h-[100%] mx-auto ">
+    <Card className={`${classNames} h-[100%] mx-auto `}>
       <div className="bg-black w-full aspect-video rounded-md" />
       <CardContent className=" mt-2 pb-1 ">
         <h2 className="text-[24px] font-bold ">Web Development Bootcamp</h2>

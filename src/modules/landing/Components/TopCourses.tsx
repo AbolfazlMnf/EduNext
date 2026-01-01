@@ -1,8 +1,7 @@
 import React from "react";
-import Container from "../container/Container";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import CourseCard from "../CourseCard/CourseCard";
+import CourseCard from "@/modules/Courses/views/CourseCard";
 
 function TopCourses() {
   const Courses: string[] = ["", "", ""];
@@ -22,7 +21,7 @@ function TopCourses() {
       </div>
       <div className="h-[80%] w-full flex md:flex-row flex-col gap-6 md:gap-0 justify-between mt-7 ">
         {Courses.map((_, index) => (
-          <CourseCard key={index} />
+          <CourseCard classNames="lg:flex-1/3" key={index} />
         ))}
       </div>
     </div>

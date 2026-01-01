@@ -2,12 +2,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
-import AuthNav from "./authNav/authNav";
-import logo from "../../assets/images/logo.png";
-import Image from "next/image";
-import NavContainer from "../container/NavContainer";
-import { Logs, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
+import AuthNav from "./AuthNav";
+import { Links } from "../mock/Links";
 
 function Navbar() {
   const pathName = usePathname();
@@ -62,24 +60,6 @@ function Navbar() {
     hidden: { y: 30, opacity: 0 },
     visible: { x: 0, opacity: 1 },
   };
-  const links = [
-    {
-      title: "home",
-      link: "/",
-    },
-    {
-      title: "courses",
-      link: "/courses",
-    },
-    {
-      title: "contact us",
-      link: "/contactUs",
-    },
-    {
-      title: "blogs",
-      link: "/blogs",
-    },
-  ];
   return (
     <>
       <motion.div
@@ -97,7 +77,7 @@ function Navbar() {
           <h1 className="text-2xl font-bold ">EduNext</h1>
         </motion.div>
         <div className="flex items-center justify-start gap-7 ">
-          {links.map((items, index) => (
+          {Links.map((items, index) => (
             <motion.div variants={DesktopItemVariants} key={index}>
               <Link
                 href={items.link}
@@ -143,7 +123,7 @@ function Navbar() {
     
   `}
               >
-                {links.map((items, index) => (
+                {Links.map((items, index) => (
                   <motion.span variants={itemVariants} key={index}>
                     <Link
                       href={items.link}

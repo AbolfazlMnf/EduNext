@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import { FooterSection } from "../Footer";
-import Container from "@/components/container/Container";
+
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
+import { FooterSection } from "../types/FooterSection";
 
 type Tprops = {
   sections: FooterSection[];

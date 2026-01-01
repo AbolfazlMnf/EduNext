@@ -1,6 +1,6 @@
+import Container from "@/components/container/Container";
 import React from "react";
-import WhyUs from "./WhyUs/WhyUs";
-import Container from "../container/Container";
+import WhyUs from "./WhyUs";
 
 function WhyUsSection() {
   return (

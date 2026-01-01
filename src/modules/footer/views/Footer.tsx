@@ -1,16 +1,5 @@
-import React from "react";
-import FooterSections from "./FooterComponents/FooterSections";
 import { Facebook, Linkedin, Twitter, Youtube } from "lucide-react";
-export type FooterLink = {
-  title: string;
-  href: string;
-};
-
-export type FooterSection = {
-  heading: string;
-  links?: FooterLink[];
-  icons?: React.ReactNode[];
-};
+import FooterSections from "../Components/FooterSections";
 const footerData = [
   {
     heading: "Popular Courses",

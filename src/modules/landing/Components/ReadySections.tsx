@@ -1,6 +1,6 @@
+import Container from "@/components/container/Container";
+import { Button } from "@/components/ui/button";
 import React from "react";
-import Container from "../container/Container";
-import { Button } from "../ui/button";
 
 function ReadySection() {
   return (
