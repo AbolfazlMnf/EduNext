@@ -5,7 +5,7 @@ import Link from "next/link";
 
 function AuthNav() {
   return (
-    <div className=" flex flex-col gap-4 lg:gap-0 lg:flex-row lg:items-center  ">
+    <div className=" flex flex-col gap-3 lg:gap-0 lg:flex-row lg:items-center  ">
       <Link href="/login">
         <Button
           variant="secondary"

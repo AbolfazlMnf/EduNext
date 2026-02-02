@@ -119,7 +119,7 @@ function Navbar() {
     w-[43%] shadow rounded
     bg-[#eeee]
     flex flex-col gap-7
-    px-6 h-[54%]
+    px-6 h-[60%]
     
   `}
               >
