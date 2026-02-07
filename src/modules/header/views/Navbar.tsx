@@ -70,7 +70,7 @@ function Navbar() {
         animate="visible"
         transition={{ duration: 0.4, ease: "easeOut" }}
         className=" hidden lg:flex items-center lg:justify-between fixed top-0 left-0 w-full
-       z-50 gap-5 py-6 px-25 bg-[#eeee] shadow dark:bg-[#1e1e1e]  "
+       z-50 gap-5 py-6 lg:px-20 bg-[#eeee] shadow dark:bg-[#1e1e1e]  "
       >
         <motion.div
           variants={DesktopItemVariants}
