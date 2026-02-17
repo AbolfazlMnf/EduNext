@@ -7,8 +7,12 @@ import { AnimatePresence, motion, Variants } from "framer-motion";
 import AuthNav from "./AuthNav";
 import { Links } from "../mock/Links";
 import { useTheme } from "@/components/useThemes/useThemes";
+import { getItem } from "@/Utils/helper/storage.services";
+import User from "./User";
 
 function Navbar() {
+  const token = getItem("accessToken");
+
   const { toggleTheme } = useTheme();
   const pathName = usePathname();
   const [Open, setOpen] = useState<boolean>(false);
@@ -96,7 +100,7 @@ function Navbar() {
             </motion.div>
           ))}
           <motion.div variants={DesktopItemVariants}>
-            <AuthNav />
+            {token ? <User /> : <AuthNav />}
           </motion.div>
         </div>
       </motion.div>
