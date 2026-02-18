@@ -1,46 +1,79 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { Mail, Loader2 } from "lucide-react";
-
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { PostForgotPass } from "@/core/services/api/post/forgotPass";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+export interface IEmail {
+  email: string | null;
+  token?: string | null;
+}
 export default function ResetPasswordForm() {
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const router = useRouter();
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
-
-    setTimeout(() => {
-      setLoading(false);
-      setMessage("If this email exists, a reset link has been sent.");
-    }, 1500);
+  const [state, action, isPending] = useActionState<
+    {
+      data: IEmail | null;
+      error: Record<string, string> | null;
+    },
+    FormData
+  >(PostForgotPass, {
+    data: {
+      email: null,
+    },
+    error: null,
+  });
+  const { data, error } = state;
+  const handleSubmit = (formData: FormData) => {
+    setSubmitted(true);
+    action(formData);
   };
-
+  useEffect(() => {
+    if (!submitted) return;
+    if (isPending) return;
+    if (error) {
+      toast.error("Something went wrong ❌");
+    } else if (data) {
+      toast.success("email sent successfully ✅");
+      if (data.token) {
+        router.push(`/forgotPass/${data.token}`);
+      }
+    }
+  }, [state]);
   return (
-    <form onSubmit={handleSubmit} className="w-full animate-fadeInSlow">
+    <form action={handleSubmit} className="w-full animate-fadeInSlow">
       <div className="relative mb-6">
-        <Mail size={22} className="absolute top-3 left-4 text-gray-400" />
+        <Mail
+          size={22}
+          className="absolute top-[50%] translate-y-[-50%] left-4 text-gray-400"
+        />
 
-        <input
+        <Input
           type="email"
+          name="email"
           placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
+          defaultValue={data?.email || ""}
           className="border w-full py-2 rounded-md outline-none pl-12 pr-4 
           border-[#ccc] 
           focus:border-[#644DB3] focus:ring-1 focus:ring-[#644DB3]
           dark:bg-transparent dark:text-white
           transition-all duration-300"
         />
+        {error?.email && (
+          <h2 className="absolute top-4 text-red-500 font-semibold">
+            {error?.email}
+          </h2>
+        )}
       </div>
 
-      <button
+      <Button
         type="submit"
-        disabled={loading}
+        disabled={isPending}
         className="w-full mb-4 bg-gradient-to-b 
         from-[#644DB3] to-[#5B48AC] 
         text-white py-2 rounded-md 
@@ -48,7 +81,7 @@ export default function ResetPasswordForm() {
         hover:opacity-90 active:scale-95
         transition-all duration-200"
       >
-        {loading ? (
+        {isPending ? (
           <>
             <Loader2 className="animate-spin" size={18} />
             Sending...
@@ -56,13 +89,7 @@ export default function ResetPasswordForm() {
         ) : (
           "Send Reset Link"
         )}
-      </button>
-
-      {message && (
-        <p className="text-green-500 text-sm text-center animate-fadeIn">
-          {message}
-        </p>
-      )}
+      </Button>
     </form>
   );
 }

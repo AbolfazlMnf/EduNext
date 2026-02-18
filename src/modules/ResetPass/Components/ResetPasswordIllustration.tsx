@@ -9,7 +9,7 @@ export default function ResetPasswordIllustration() {
       </h1>
 
       <p className="text-gray-600 dark:text-[#898989] mt-3 text-sm md:text-base">
-        Don’t worry! Enter your email and we’ll send you a reset link.
+        Don’t worry! Enter your email and then set a new Password
       </p>
 
       <div className="mt-6">
