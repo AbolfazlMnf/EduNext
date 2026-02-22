@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   GetAllCategories,
   ICategoriesData,
@@ -92,18 +93,25 @@ function SideFilters() {
               Categories
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
-              {catData.map((item) => (
-                <div key={item._id} className="flex items-center gap-2">
-                  <Checkbox
-                    checked={selectedCategories.includes(item._id)}
-                    onCheckedChange={() => handlechangeCategory(item._id)}
-                    id={item._id}
-                  />
-                  <label htmlFor={item.name} className="text-sm">
-                    {item.name}
-                  </label>
-                </div>
-              ))}
+              {pendingCats
+                ? Array.from({ length: 3 }, (_, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <Skeleton className="h-4 w-4 rounded-sm" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
+                  ))
+                : catData.map((item) => (
+                    <div key={item._id} className="flex items-center gap-2">
+                      <Checkbox
+                        checked={selectedCategories.includes(item._id)}
+                        onCheckedChange={() => handlechangeCategory(item._id)}
+                        id={item._id}
+                      />
+                      <label htmlFor={item.name} className="text-sm">
+                        {item.name}
+                      </label>
+                    </div>
+                  ))}
             </AccordionContent>
           </AccordionItem>
 
@@ -132,18 +140,25 @@ function SideFilters() {
               Level
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
-              {levelsData.map((level) => (
-                <div key={level._id} className="flex items-center gap-2">
-                  <Checkbox
-                    checked={selectedLevels === level._id}
-                    onCheckedChange={() => handleChangeLevel(level._id)}
-                    id={level._id}
-                  />
-                  <label htmlFor={level.name} className="text-sm">
-                    {level.name}
-                  </label>
-                </div>
-              ))}
+              {pendingLevels
+                ? Array.from({ length: 3 }, (_, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <Skeleton className="h-4 w-4 rounded-sm" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
+                  ))
+                : levelsData.map((level) => (
+                    <div key={level._id} className="flex items-center gap-2">
+                      <Checkbox
+                        checked={selectedLevels === level._id}
+                        onCheckedChange={() => handleChangeLevel(level._id)}
+                        id={level._id}
+                      />
+                      <label htmlFor={level.name} className="text-sm">
+                        {level.name}
+                      </label>
+                    </div>
+                  ))}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
