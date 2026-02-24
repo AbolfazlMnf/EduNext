@@ -12,6 +12,7 @@ export interface CommentData {
   createdAt: string;
 }
 
+
 export const getCourseComments = async (courseId: string): Promise<CommentData[]> => {
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   
