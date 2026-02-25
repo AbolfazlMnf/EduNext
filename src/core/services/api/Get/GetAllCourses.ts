@@ -43,7 +43,9 @@ export interface ICourseMeta {
   limit: number;
 }
 
-export async function GetAllCourses(params?: ICourseParams) {
+export async function GetAllCourses(
+  params?: ICourseParams,
+): Promise<ICourseResult> {
   try {
     const queryString = params
       ? `?${new URLSearchParams(params as Record<string, string>)}`
@@ -55,6 +57,7 @@ export async function GetAllCourses(params?: ICourseParams) {
     if (!res.ok) {
       throw new Error(`Status: ${res.status}`);
     }
+    console.log("object");
 
     const result: ICourseResult = await res.json();
     return result;

@@ -1,0 +1,72 @@
+"use client";
+import { usePathname } from "next/navigation";
+import React from "react";
+import { VerticalLinks, VerticalNavLinkType } from "../mock/Links";
+import Link from "next/link";
+import DashboardContainer from "@/components/container/DashboardContainer";
+import { motion, easeIn, Variants } from "framer-motion";
+function VerticalNav() {
+  const sideBarVariants: Variants = {
+    hidden: { x: -80, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 120,
+        damping: 20,
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
+  const itemVariants: Variants = {
+    hidden: { x: -40, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 200,
+      },
+    },
+  };
+  const pathName = usePathname();
+  return (
+    <motion.div
+      variants={sideBarVariants}
+      initial="hidden"
+      animate="visible"
+      className="w-full shadow dark:bg-[#1e1e1e] dark:shadow-[0_0_20px_4px_#644DB3] bg-[#ffff] h-full flex flex-col pr-4 rounded-md "
+    >
+      <motion.h1
+        variants={itemVariants}
+        className="text-2xl font-bold py-5 pl-5 animate-slideUp  "
+      >
+        EduNext
+      </motion.h1>
+      {VerticalLinks.map((item: VerticalNavLinkType, i) => (
+        <Link
+          key={i}
+          href={item.link}
+          className={`pl-5  py-4 transition-all duration-150 ease-in-out hover:bg-[rgba(61,29,191,0.1)] hover:font-bold rounded-r-md  hover:text-lg ${
+            item.link == pathName
+              ? "bg-[rgba(61,29,191,0.2)] hover:bg-[rgba(61,29,191,0.2)] text-[#3d1dbf] border-l-2  border-[#3d1dbf] "
+              : ""
+          } `}
+        >
+          <motion.span variants={itemVariants}>{item.title}</motion.span>
+        </Link>
+      ))}
+      <motion.p
+        variants={itemVariants}
+        className="pl-5 slideUpX py-4 transition-all duration-150 ease-in-out hover:bg-red-600/20
+       hover:font-bold  hover:text-lg rounded-r-md"
+      >
+        Log out
+      </motion.p>
+    </motion.div>
+  );
+}
+
+export default VerticalNav;
