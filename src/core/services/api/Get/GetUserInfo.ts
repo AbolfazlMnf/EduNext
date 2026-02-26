@@ -27,7 +27,9 @@ export interface IUser {
 
 export const getUserInfo = async (): Promise<IUser | null> => {
   try {
-    const res = await fetch(`${BaseUrl}/auth/profile`, { cache: "no-store" });
+    const res = await fetch(`${BaseUrl}/user-panel/profile`, {
+      cache: "no-store",
+    });
     if (!res.ok) return null;
     const result = await res.json();
     return result.user ?? null;

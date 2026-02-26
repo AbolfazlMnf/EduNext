@@ -10,16 +10,19 @@ function UserPanelLayout({
 }>) {
   return (
     <DashboardContainer>
-      <div className=" flex flex-col w-full h-screen justify-between gap-5">
-        <div>
+      <div className="flex flex-col  h-screen overflow-hidden">
+        <div className="shrink-0">
           <HorizantalNavView />
         </div>
 
-        <div className="lg:px-15 lg:flex lg:items-start lg:justify-between h-full ">
-          <div className="lg:w-[20%] lg:h-[96%] hidden lg:block ">
+        <div className="flex flex-1 overflow-hidden lg:px-15 py-4">
+          <div className="hidden lg:block lg:w-[20%] h-full">
             <VerticalNavView />
           </div>
-          <div className=" px-5 w-full lg:w-[78%] lg:h-[96%]">{children}</div>
+
+          <div className="px-5 w-full lg:w-[80%] h-full overflow-y-auto">
+            {children}
+          </div>
         </div>
       </div>
     </DashboardContainer>

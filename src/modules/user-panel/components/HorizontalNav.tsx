@@ -14,7 +14,7 @@ const HorizontalNav = async () => {
   return (
     <>
       <div
-        className="lg:flex items-center justify-between w-full
+        className="lg:flex items-center justify-between w-full 
        shadow dark:shadow-lg  lg:px-15 py-5 hidden "
       >
         <ToggleThem />
