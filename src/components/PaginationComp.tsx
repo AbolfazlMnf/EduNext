@@ -14,17 +14,19 @@ import {
 interface PaginationCompProps {
   currentPage: number;
   totalPages: number;
+  paramName?: string;
 }
 
 export function PaginationComp({
   currentPage,
   totalPages,
+  paramName = "page",
 }: PaginationCompProps) {
   const searchParams = useSearchParams();
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set("page", pageNumber.toString());
+    params.set(paramName, pageNumber.toString());
     return `?${params.toString()}`;
   };
 

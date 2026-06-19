@@ -13,11 +13,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { AdminSignup, AdminTransaction } from "../data/mock";
 import type { AdminReportData } from "@/core/services/api/Get/GetAdminReports";
 import type { CoursesPageData } from "@/core/services/api/Get/GetAllCoursesAdmin";
 import type { AdminCategory } from "@/core/services/api/Get/GetAllCategoryAdmin";
 import type { AdminLevel } from "@/core/services/api/Get/GetAllLevelsAdmin";
+import type { AdminTransaction } from "@/core/services/api/Get/GetLatestTransaction";
+import type { AllPaymentsPageData } from "@/core/services/api/Get/GetAllPayment";
 import {
   Select,
   SelectContent,
@@ -28,21 +29,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { PaginationComp } from "@/components/PaginationComp";
 import { AllPaymentModal } from "./sales-reports/modals/allPaymentModal";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Lottie from "lottie-react";
 import Empty from "@/assets/Lottie/Empty.json";
 import Image from "next/image";
 
 type Props = {
-  mockData: {
-    signups: AdminSignup[];
-    transactions: AdminTransaction[];
-  };
   reports: AdminReportData;
   coursesData: CoursesPageData;
   categories: AdminCategory[];
   levels: AdminLevel[];
+  latestTransactions: AdminTransaction[];
+  allPaymentsData: AllPaymentsPageData;
 };
 
 const formatDelta = (diff: number, prefix: string = "") => {
@@ -62,12 +61,17 @@ export function AdminDashboard({
   coursesData,
   categories,
   levels,
+  latestTransactions,
+  allPaymentsData,
 }: Props) {
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(() =>
+    searchParams.has("paymentPage"),
+  );
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -124,6 +128,20 @@ export function AdminDashboard({
       accent: "emerald" as const,
     },
   ];
+
+  const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+
+    if (searchParams.has("paymentPage")) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("paymentPage");
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }
+  };
+
+  const handleOpenPaymentModal = () => {
+    setIsPaymentModalOpen(true);
+  };
 
   return (
     <div className="space-y-6 ">
@@ -183,7 +201,7 @@ export function AdminDashboard({
         <Card className="xl:col-span-8 mb-5 2xl:mb-0 rounded-3xl border-white/70 bg-white/80 shadow-sm backdrop-blur dark:bg-[#333]">
           <CardHeader className="flex flex-col gap-4 py-7 lg:flex-row lg:items-center lg:justify-between">
             <CardTitle className="text-xl text-center md:text-start w-full">
-              Course Management
+              Course View
             </CardTitle>
           </CardHeader>
 
@@ -520,29 +538,31 @@ export function AdminDashboard({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {/* {data.transactions.slice(0, 3).map((item) => (
+              {latestTransactions.map((item) => (
                 <div
-                  key={item.title}
+                  key={item.id}
                   className="flex items-center justify-between"
                 >
                   <div>
                     <div className="font-medium dark:text-[white]">
                       {item.amount}
                     </div>
-                    <div className="text-xs text-slate-500 dark:text-[#898989]">
+                    <div className="text-xs text-slate-500 dark:text-[#898989] max-w-[150px] truncate">
                       {item.title}
                     </div>
                   </div>
                   <div className="text-right text-xs text-slate-500">
                     <div className="dark:text-[#898989]">{item.time}</div>
-                    <div className="dark:text-[#898989]">{item.meta}</div>
+                    <div className="dark:text-[#898989] truncate max-w-[100px]">
+                      {item.meta}
+                    </div>
                   </div>
                 </div>
-              ))} */}
+              ))}
             </CardContent>
             <div className="flex items-center justify-center">
               <Button
-                onClick={() => setIsPaymentModalOpen(true)}
+                onClick={handleOpenPaymentModal}
                 variant="outline"
                 className="w-[90%] flex items-center justify-center mt-4  mx-auto cursor-pointer rounded-2xl border-violet-600 text-violet-600 hover:text-violet-600 hover:bg-violet-50 dark:border-violet-500 dark:text-violet-400 dark:hover:bg-violet-500/10"
               >
@@ -555,7 +575,8 @@ export function AdminDashboard({
       </section>
       <AllPaymentModal
         isOpen={isPaymentModalOpen}
-        onClose={() => setIsPaymentModalOpen(false)}
+        onClose={handleClosePaymentModal}
+        allPaymentsData={allPaymentsData}
       />
     </div>
   );

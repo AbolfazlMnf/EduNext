@@ -8,7 +8,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   DollarSign,
@@ -19,62 +18,21 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PaginationComp } from "@/components/PaginationComp";
-
-interface PaymentRecord {
-  id: string;
-  userName: string;
-  courseName: string;
-  courseImage: string;
-  status: "Success" | "Failed";
-  price: string;
-  date: string;
-}
+import type { AllPaymentsPageData } from "@/core/services/api/Get/GetAllPayment";
 
 interface AllPaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
+  allPaymentsData: AllPaymentsPageData;
 }
 
-const MOCK_PAYMENTS: PaymentRecord[] = [
-  {
-    id: "1",
-    userName: "Ali Rezaei",
-    courseName: "EduNext Full-Stack Bootcamp",
-    courseImage: "https://i.pravatar.cc/150?img=12",
-    status: "Success",
-    price: "$149.00",
-    date: "2026-06-01",
-  },
-  {
-    id: "2",
-    userName: "Sara Ahmadi",
-    courseName: "Advanced Next.js & React",
-    courseImage: "https://i.pravatar.cc/150?img=47",
-    status: "Failed",
-    price: "$89.00",
-    date: "2026-05-28",
-  },
-  {
-    id: "3",
-    userName: "Matin Hosseini",
-    courseName: "Node.js Microservices",
-    courseImage: "https://i.pravatar.cc/150?img=33",
-    status: "Success",
-    price: "$110.00",
-    date: "2026-05-25",
-  },
-  {
-    id: "4",
-    userName: "Matin Hosseini",
-    courseName: "Node.js Microservices",
-    courseImage: "https://i.pravatar.cc/150?img=33",
-    status: "Success",
-    price: "$110.00",
-    date: "2026-05-25",
-  },
-];
+export function AllPaymentModal({
+  isOpen,
+  onClose,
+  allPaymentsData,
+}: AllPaymentModalProps) {
+  const { payments, meta } = allPaymentsData;
 
-export function AllPaymentModal({ isOpen, onClose }: AllPaymentModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
@@ -100,15 +58,15 @@ export function AllPaymentModal({ isOpen, onClose }: AllPaymentModalProps) {
 
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-50/30 dark:bg-transparent scrollbar-thin ">
           <div className="flex flex-col gap-4 md:hidden">
-            {MOCK_PAYMENTS.map((payment) => (
+            {payments.map((payment) => (
               <div
                 key={payment.id}
                 className="rounded-3xl border border-slate-200/80 bg-white shadow-sm p-4 dark:border-[#444] dark:bg-[#3a3a3a] transition-all"
               >
-                <div className="  flex items-center gap-3 border-b border-slate-100 dark:border-[#444]/50 pb-3 mb-3">
+                <div className="flex items-center gap-3 border-b border-slate-100 dark:border-[#444]/50 pb-3 mb-3">
                   <Image
-                    src={payment.courseImage}
-                    alt={payment.courseName}
+                    src={payment.userImage}
+                    alt={payment.userName}
                     width={40}
                     height={40}
                     className="rounded-full shrink-0 object-cover border border-slate-100 dark:border-[#555]"
@@ -171,7 +129,7 @@ export function AllPaymentModal({ isOpen, onClose }: AllPaymentModalProps) {
 
           <div className="hidden md:block w-full">
             <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-[#898989] border-b border-slate-200/80 dark:border-[#444]/80 mb-2">
-              <div className="col-span-4">Course</div>
+              <div className="col-span-4">User Image</div>
               <div className="col-span-2">User Name</div>
               <div className="col-span-2">Amount</div>
               <div className="col-span-2">Date</div>
@@ -179,18 +137,18 @@ export function AllPaymentModal({ isOpen, onClose }: AllPaymentModalProps) {
             </div>
 
             <div className="space-y-2.5">
-              {MOCK_PAYMENTS.map((payment) => (
+              {payments.map((payment) => (
                 <div
                   key={payment.id}
-                  className="  grid grid-cols-12 gap-4 items-center px-6 py-3.5 2xl:py-5 rounded-2xl bg-white/60 dark:bg-[#454545]/20 hover:bg-white dark:hover:bg-[#454545]/60 border border-transparent hover:border-slate-200 dark:hover:border-[#555] transition-all shadow-sm hover:shadow-md cursor-default"
+                  className="grid grid-cols-12 gap-4 items-center px-6 py-3.5 2xl:py-5 rounded-2xl bg-white/60 dark:bg-[#454545]/20 hover:bg-white dark:hover:bg-[#454545]/60 border border-transparent hover:border-slate-200 dark:hover:border-[#555] transition-all shadow-sm hover:shadow-md cursor-default"
                 >
-                  <div className="  col-span-4 flex items-center gap-3 pr-2">
+                  <div className="col-span-4 flex items-center gap-3 pr-2">
                     <Image
-                      src={payment.courseImage}
+                      src={payment.userImage}
                       alt={payment.courseName}
                       width={40}
                       height={40}
-                      className="rounded-full shrink-0 object-cover shadow-sm border border-slate-100 dark:border-[#555]"
+                      className="h-10 w-10 rounded-full shrink-0 object-cover shadow-sm border border-slate-100 dark:border-[#555] dark:bg-[#ccc]"
                     />
                     <span className="text-sm font-semibold text-slate-900 dark:text-white truncate">
                       {payment.courseName}
@@ -233,7 +191,14 @@ export function AllPaymentModal({ isOpen, onClose }: AllPaymentModalProps) {
             </div>
           </div>
         </div>
-        <PaginationComp />
+
+        {meta && meta.pages > 1 && (
+          <PaginationComp
+            currentPage={meta.page}
+            totalPages={meta.pages}
+            paramName="paymentPage"
+          />
+        )}
       </DialogContent>
     </Dialog>
   );
