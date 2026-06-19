@@ -4,6 +4,8 @@ import { getAdminReports } from "@/core/services/api/Get/GetAdminReports";
 import { getAllCoursesAdmin } from "@/core/services/api/Get/GetAllCoursesAdmin";
 import { getAllCategoryAdmin } from "@/core/services/api/Get/GetAllCategoryAdmin";
 import { getAllLevelsAdmin } from "@/core/services/api/Get/GetAllLevelsAdmin";
+import { getLatestTransactions } from "@/core/services/api/Get/GetLatestTransaction";
+import { getAllPayments } from "@/core/services/api/Get/GetAllPayment";
 
 type PageProps = {
   searchParams: Promise<{
@@ -19,22 +21,34 @@ export default async function Page({ searchParams }: PageProps) {
   const courseLevel = params.courseLevel;
   const page = params.page ? Number(params.page) : 1;
 
-  const [mockData, reportsRes, coursesRes, categoriesRes, levelsRes] =
-    await Promise.all([
-      getAdminDashboardData(),
-      getAdminReports(),
-      getAllCoursesAdmin({ page, limit: 8, search, categories, courseLevel }),
-      getAllCategoryAdmin(),
-      getAllLevelsAdmin(),
-    ]);
+  const paymentPage = params.paymentPage ? Number(params.paymentPage) : 1;
+
+  const [
+    mockData,
+    reportsRes,
+    coursesRes,
+    categoriesRes,
+    levelsRes,
+    latestTransactions,
+    allPaymentsRes,
+  ] = await Promise.all([
+    getAdminDashboardData(),
+    getAdminReports(),
+    getAllCoursesAdmin({ page, limit: 8, search, categories, courseLevel }),
+    getAllCategoryAdmin(),
+    getAllLevelsAdmin(),
+    getLatestTransactions(4),
+    getAllPayments({ page: paymentPage, limit: 10 }),
+  ]);
 
   return (
     <AdminDashboard
-      mockData={mockData}
       reports={reportsRes.data}
       coursesData={coursesRes}
       categories={categoriesRes}
       levels={levelsRes}
+      latestTransactions={latestTransactions}
+      allPaymentsData={allPaymentsRes}
     />
   );
 }
