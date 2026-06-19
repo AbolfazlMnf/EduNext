@@ -1,11 +1,13 @@
-import { AdminDashboard } from "@/modules/panels/admin/components/dashboard";
-import { getAdminDashboardData } from "@/modules/panels/admin/data/mock";
+import { AdminDashboard } from "@/modules/admin/components/dashboard";
+import { getAdminDashboardData } from "@/modules/admin/data/mock";
 import { getAdminReports } from "@/core/services/api/Get/GetAdminReports";
 import { getAllCoursesAdmin } from "@/core/services/api/Get/GetAllCoursesAdmin";
 import { getAllCategoryAdmin } from "@/core/services/api/Get/GetAllCategoryAdmin";
 import { getAllLevelsAdmin } from "@/core/services/api/Get/GetAllLevelsAdmin";
 import { getLatestTransactions } from "@/core/services/api/Get/GetLatestTransaction";
 import { getAllPayments } from "@/core/services/api/Get/GetAllPayment";
+import { getAllUsers } from "@/core/services/api/Get/GetAllUser";
+import { getSalesOverview } from "@/core/services/api/Get/GetSalesOverview";
 
 type PageProps = {
   searchParams: Promise<{
@@ -31,6 +33,8 @@ export default async function Page({ searchParams }: PageProps) {
     levelsRes,
     latestTransactions,
     allPaymentsRes,
+    usersRes,
+    salesOverviewRes,
   ] = await Promise.all([
     getAdminDashboardData(),
     getAdminReports(),
@@ -39,6 +43,8 @@ export default async function Page({ searchParams }: PageProps) {
     getAllLevelsAdmin(),
     getLatestTransactions(4),
     getAllPayments({ page: paymentPage, limit: 10 }),
+    getAllUsers({ page: 1, limit: 10 }),
+    getSalesOverview(7),
   ]);
 
   return (
@@ -49,6 +55,8 @@ export default async function Page({ searchParams }: PageProps) {
       levels={levelsRes}
       latestTransactions={latestTransactions}
       allPaymentsData={allPaymentsRes}
+      recentUsersData={usersRes}
+      salesOverviewData={salesOverviewRes.data}
     />
   );
 }
