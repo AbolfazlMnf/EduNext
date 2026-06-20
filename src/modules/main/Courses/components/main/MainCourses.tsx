@@ -4,20 +4,6 @@ import {
   ICourseResult,
 } from "@/core/services/api/Get/GetAllCourses";
 import CourseCard from "../../views/CourseCard";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { ICourses } from "../../types/CoursesTP";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 import CoursesPagination from "./Pagination";
 import CoursesSort from "./sort";
 import { ICourseParams } from "@/app/(main)/courses/page";
