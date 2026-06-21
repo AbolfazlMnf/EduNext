@@ -1,12 +1,25 @@
 import DashboardContainer from "@/components/container/DashboardContainer";
 import HorizantalNavView from "@/modules/panels/user-panel/view/HorizantalNavView";
 import VerticalNavView from "@/modules/panels/user-panel/view/VerticalNavView";
+import { GetSiteSetting } from "@/core/services/api/Get/GetSiteSetting";
+import Maintenance from "@/modules/panels/admin/components/setting/Maintenance";
 
-function UserPanelLayout({
+export default async function UserPanelLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const response = await GetSiteSetting();
+  const isMaintenanceMode = response?.data?.isMaintenanceMode || false;
+
+  if (isMaintenanceMode) {
+    return (
+      <main className="min-h-screen w-full flex flex-col bg-slate-50 dark:bg-[#121212]">
+        <Maintenance />
+      </main>
+    );
+  }
+
   return (
     <DashboardContainer>
       <div className="flex flex-col h-screen overflow-hidden">
@@ -27,5 +40,3 @@ function UserPanelLayout({
     </DashboardContainer>
   );
 }
-
-export default UserPanelLayout;

@@ -1,6 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { motion } from "framer-motion";
 import {
   Card,
@@ -13,25 +17,69 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Globe, ShieldAlert, Save, RotateCcw } from "lucide-react";
+import { Globe, ShieldAlert, Save, RotateCcw, Loader2 } from "lucide-react";
 
-export function SettingsForm() {
-  const [siteTitle, setSiteTitle] = useState("Edunext");
-  const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
+import {
+  UpdateSiteSetting,
+  UpdateSiteSettingPayload,
+} from "@/core/services/api/put/UpdateSiteSetting";
+import { toast } from "sonner";
+
+interface SettingsFormProps {
+  initialData: {
+    siteTitle: string;
+    isMaintenanceMode: boolean;
+  };
+}
+
+export function SettingsForm({ initialData }: SettingsFormProps) {
+  const router = useRouter();
+  const [isPendingRefresh, startTransition] = useTransition();
+
+  const [siteTitle, setSiteTitle] = useState(initialData.siteTitle);
+  const [isMaintenanceMode, setIsMaintenanceMode] = useState(
+    initialData.isMaintenanceMode,
+  );
+
+  const { mutate, isPending: isMutating } = useMutation({
+    mutationFn: (payload: UpdateSiteSettingPayload) =>
+      UpdateSiteSetting(payload),
+    onSuccess: (data) => {
+      toast.success(data.message || "Settings updated successfully");
+      startTransition(() => {
+        router.refresh();
+      });
+    },
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      siteTitle: initialData.siteTitle,
+      isMaintenanceMode: initialData.isMaintenanceMode,
+    },
+    validationSchema: Yup.object({
+      siteTitle: Yup.string()
+        .min(3, "Site title must be at least 3 characters.")
+        .required("Site title is required."),
+    }),
+    onSubmit: (values) => {
+      mutate(values);
+    },
+  });
+
+  const handleCancel = () => {
+    formik.resetForm();
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const payload = {
-      siteTitle,
-      isMaintenanceMode,
-    };
+    mutate({ siteTitle, isMaintenanceMode });
   };
 
-  const handleCancel = () => {
-    setSiteTitle("Edunext");
-    setIsMaintenanceMode(false);
-  };
+  const isLoading = isMutating || isPendingRefresh;
 
   return (
     <motion.div
@@ -49,7 +97,7 @@ export function SettingsForm() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={formik.handleSubmit} className="space-y-6">
         <Card className="rounded-3xl py-10 border-white/70 bg-white/80 shadow-md backdrop-blur dark:bg-[#333] dark:border-[#444] overflow-hidden">
           <CardHeader className="pb-4">
             <CardTitle className="text-xl font-semibold text-slate-900 dark:text-white flex items-center gap-2">
@@ -72,12 +120,23 @@ export function SettingsForm() {
               </Label>
               <Input
                 id="siteTitle"
+                name="siteTitle"
                 type="text"
-                value={siteTitle}
-                onChange={(e) => setSiteTitle(e.target.value)}
                 placeholder="Enter website title..."
-                className="h-12 rounded-2xl border-slate-200 focus-visible:ring-1 focus-visible:ring-violet-600 dark:bg-[#252525] dark:border-[#444] text-sm font-medium"
+                value={formik.values.siteTitle}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`h-12 rounded-2xl border-slate-200 focus-visible:ring-1 focus-visible:ring-violet-600 dark:bg-[#252525] dark:border-[#444] text-sm font-medium ${
+                  formik.touched.siteTitle && formik.errors.siteTitle
+                    ? "border-red-500 focus-visible:ring-red-500"
+                    : ""
+                }`}
               />
+              {formik.touched.siteTitle && formik.errors.siteTitle && (
+                <p className="text-xs text-red-500 mt-1 pl-1">
+                  {formik.errors.siteTitle}
+                </p>
+              )}
             </div>
 
             <hr className="border-slate-100 dark:border-[#444]/60" />
@@ -117,8 +176,10 @@ export function SettingsForm() {
                 </div>
 
                 <Switch
-                  checked={isMaintenanceMode}
-                  onCheckedChange={setIsMaintenanceMode}
+                  checked={formik.values.isMaintenanceMode}
+                  onCheckedChange={(checked) =>
+                    formik.setFieldValue("isMaintenanceMode", checked)
+                  }
                   className="data-[state=checked]:bg-amber-500"
                 />
               </div>
@@ -131,6 +192,7 @@ export function SettingsForm() {
             type="button"
             variant="outline"
             onClick={handleCancel}
+            disabled={isLoading}
             className="rounded-2xl dark:text-white border-slate-200 dark:border-[#444] hover:bg-slate-50 dark:hover:bg-[#454545]/50 px-5 transition-all"
           >
             <RotateCcw className="mr-1.5 h-4 w-4 opacity-70" />
@@ -139,10 +201,20 @@ export function SettingsForm() {
 
           <Button
             type="submit"
-            className="rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-medium px-6 shadow-md shadow-violet-600/10 transition-all"
+            disabled={isLoading}
+            className="rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-medium px-6 shadow-md shadow-violet-600/10 transition-all flex items-center min-w-[140px] justify-center"
           >
-            <Save className="mr-1.5 h-4 w-4" />
-            Save Settings
+            {isLoading ? (
+              <>
+                <Loader2 className=" h-4 w-4 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="mr-1.5 h-4 w-4" />
+                Save Settings
+              </>
+            )}
           </Button>
         </div>
       </form>
