@@ -28,6 +28,7 @@ httpClient.interceptors.request.use(
   (config) => {
     // check token
     const token = getCookie("accessToken");
+
     // set header if we have token
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -67,7 +68,7 @@ httpClient.interceptors.response.use(
       if (!refreshToken) {
         deleteCookie("accessToken");
         toast.error("sign in again");
-        window.location.href = "/auth/login";
+        window.location.href = "/login";
         return Promise.reject(error);
       }
 
@@ -94,7 +95,7 @@ httpClient.interceptors.response.use(
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
         toast.error("please login again ");
-        window.location.href = "/auth/login";
+        window.location.href = "/login";
         return Promise.reject(err);
       } finally {
         isRefreshing = false;

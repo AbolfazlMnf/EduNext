@@ -1,3 +1,4 @@
+import httpClient from "@/core/interceptor";
 import { BaseUrl } from "@/Utils/URL";
 import axios from "axios";
 
@@ -32,7 +33,8 @@ export interface User {
 }
 
 export const DeleteProfileImage = async (): Promise<IDeleteImgRes | null> => {
-  const res = await axios.delete(`${BaseUrl}/user-panel/profile-image`);
+  const res = await httpClient.delete(`${BaseUrl}/user-panel/profile-image`);
+
   if (res.status !== 200) {
     throw new Error(res.data?.message || "Delete failed");
   }

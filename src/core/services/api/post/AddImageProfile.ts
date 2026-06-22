@@ -1,5 +1,5 @@
+import httpClient from "@/core/interceptor";
 import { BaseUrl } from "@/Utils/URL";
-import axios from "axios";
 
 export interface IUploadImgRes {
   status: string;
@@ -34,9 +34,11 @@ export interface User {
 export const addProfileImage = async (
   imageFile: File,
 ): Promise<IUploadImgRes | null> => {
-  const res = await axios.post(
+  const formData = new FormData();
+  formData.set("profileImage", imageFile);
+  const res = await httpClient.post(
     `${BaseUrl}/user-panel/profile-image`,
-    imageFile,
+    formData,
   );
   if (res.status !== 200) {
     throw new Error(res.data?.message || "Delete failed");

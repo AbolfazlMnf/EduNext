@@ -23,13 +23,22 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { IUser } from "./Navbar";
+import { useState } from "react";
+import { LogoutDialog } from "@/components/LogOutDialog";
+import { useRouter } from "next/navigation";
+import { logOut } from "../services";
+import { toast } from "sonner";
 
 interface UserMenuProps {
   user: IUser;
-  onLogout?: () => void;
 }
 
-export function UserMenu({ user, onLogout }: UserMenuProps) {
+export function UserMenu({ user }: UserMenuProps) {
+  const [openLogOutModal, setOpenLogOutModal] = useState<boolean>(false);
+  const onChangeOpen = (open: boolean) => {
+    setOpenLogOutModal(open);
+  };
+
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -38,6 +47,7 @@ export function UserMenu({ user, onLogout }: UserMenuProps) {
       .toUpperCase()
       .slice(0, 2);
   };
+  const router = useRouter();
 
   const isAdmin = user.role.includes("admin");
   const isTeacher = user.role.includes("teacher");
@@ -104,71 +114,76 @@ export function UserMenu({ user, onLogout }: UserMenuProps) {
         <DropdownMenuSeparator />
 
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="/profile" className="cursor-pointer">
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
-            </Link>
-          </DropdownMenuItem>
+          {!isAdmin && !isTeacher && (
+            <>
+              <DropdownMenuItem asChild>
+                <Link href="panels/user/userInfo" className="cursor-pointer">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </Link>
+              </DropdownMenuItem>
 
-          <DropdownMenuItem asChild>
-            <Link href="/my-courses" className="cursor-pointer">
-              <BookOpen className="mr-2 h-4 w-4" />
-              <span>My Courses</span>
-              {user.purchasedCourses.length > 0 && (
-                <Badge variant="secondary" className="ml-auto text-xs">
-                  {user.purchasedCourses.length}
-                </Badge>
-              )}
-            </Link>
-          </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link
+                  href="panels/user/user-courses"
+                  className="cursor-pointer"
+                >
+                  <BookOpen className="mr-2 h-4 w-4" />
+                  <span>My Courses</span>
+                  {user.purchasedCourses.length > 0 && (
+                    <Badge variant="secondary" className="ml-auto text-xs">
+                      {user.purchasedCourses.length}
+                    </Badge>
+                  )}
+                </Link>
+              </DropdownMenuItem>
+            </>
+          )}
 
-          <DropdownMenuItem asChild>
-            <Link href="/wishlist" className="cursor-pointer">
-              <Heart className="mr-2 h-4 w-4" />
-              <span>Wishlist</span>
-            </Link>
-          </DropdownMenuItem>
+          {isAdmin ||
+            (isTeacher && (
+              <DropdownMenuItem asChild>
+                <Link href="/settings" className="cursor-pointer">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </Link>
+              </DropdownMenuItem>
+            ))}
+        </DropdownMenuGroup>
 
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href="/billing" className="cursor-pointer">
-              <CreditCard className="mr-2 h-4 w-4" />
-              <span>Billing</span>
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem asChild>
-            <Link href="/settings" className="cursor-pointer">
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
+            <Link
+              href={isAdmin || isTeacher ? "/panels/admin" : "/panels/user"}
+              className="cursor-pointer text-primary"
+            >
+              <Shield className="mr-2 h-4 w-4" />
+              <span>Dashboard</span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-
-        {(isAdmin || isTeacher) && (
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard" className="cursor-pointer text-primary">
-                  <Shield className="mr-2 h-4 w-4" />
-                  <span>Dashboard</span>
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </>
-        )}
 
         <DropdownMenuSeparator />
 
         <DropdownMenuItem
           className="cursor-pointer text-red-600 focus:text-red-600"
-          onClick={onLogout}
+          onClick={() => onChangeOpen(true)}
         >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
+      <LogoutDialog
+        open={openLogOutModal}
+        onOpenChange={onChangeOpen}
+        onConfirm={() => {
+          logOut();
+          router.push("/");
+          router.refresh();
+          toast.success("Log out successfully");
+        }}
+      />
     </DropdownMenu>
   );
 }

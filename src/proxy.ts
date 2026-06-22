@@ -11,7 +11,7 @@ export default async function proxy(req: NextRequest) {
   const refreshToken = req.cookies.get("refreshToken")?.value;
 
   if (isProtectedRoute && !refreshToken) {
-    return NextResponse.redirect(new URL("/auth/login", req.url));
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
   const isNeedRefresh =
@@ -37,7 +37,7 @@ export default async function proxy(req: NextRequest) {
         response.cookies.delete("refreshToken");
 
         if (isProtectedRoute) {
-          return NextResponse.redirect(new URL("/auth/login", req.url));
+          return NextResponse.redirect(new URL("/login", req.url));
         }
         return response;
       }
@@ -52,7 +52,7 @@ export default async function proxy(req: NextRequest) {
       response.cookies.delete("refreshToken");
 
       if (isProtectedRoute) {
-        return NextResponse.redirect(new URL("/auth/login", req.url));
+        return NextResponse.redirect(new URL("/login", req.url));
       }
     }
   }

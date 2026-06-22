@@ -69,7 +69,7 @@ export async function apiFetch<T = any>(
     const res = await fetch(url, requestInit);
 
     if (res.status === 401) {
-      redirect("/auth/login");
+      redirect("/login");
     }
 
     if (!res.ok) {

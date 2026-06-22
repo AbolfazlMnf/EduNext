@@ -1,4 +1,4 @@
-import { UserInfoView } from "@/modules/panels/user-panel/view/UserInfoView";
+import { UserInfoView } from "@/modules/panels/user-panel/dashboard/view/UserInfoView";
 
 const UserInfoPage = () => {
   return (

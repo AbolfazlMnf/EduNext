@@ -1,6 +1,6 @@
 import DashboardContainer from "@/components/container/DashboardContainer";
-import HorizantalNavView from "@/modules/panels/user-panel/view/HorizantalNavView";
-import VerticalNavView from "@/modules/panels/user-panel/view/VerticalNavView";
+import HorizantalNavView from "@/modules/panels/user-panel/dashboard/view/HorizantalNavView";
+import VerticalNavView from "@/modules/panels/user-panel/dashboard/view/VerticalNavView";
 
 function UserPanelLayout({
   children,
@@ -14,12 +14,12 @@ function UserPanelLayout({
           <HorizantalNavView />
         </div>
 
-        <div className="flex flex-1 overflow-hidden lg:px-15 py-4">
+        <div className="flex gap-6 flex-1 overflow-hidden lg:px-15 py-4">
           <div className="hidden lg:block lg:w-[20%] h-full">
             <VerticalNavView />
           </div>
 
-          <div className="px-5 w-full lg:w-[80%] h-full overflow-y-auto">
+          <div className=" px-5 md:px-0 w-full lg:w-[80%] h-full overflow-y-auto">
             {children}
           </div>
         </div>
