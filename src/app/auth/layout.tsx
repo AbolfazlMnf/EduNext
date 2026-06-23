@@ -1,3 +1,8 @@
+import { metadataGenerator } from "@/Utils/helper/metadata";
+
+export async function generateMetadata() {
+  return metadataGenerator({ title: "EduNext | Auth" });
+}
 export default function AuthLayout({
   children,
 }: {

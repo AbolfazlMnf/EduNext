@@ -25,7 +25,7 @@ function AuthNav({ user }: { user?: IUser }) {
         />
       ) : (
         <div>
-          <Link href="/login">
+          <Link href="/auth/login">
             <Button
               variant="secondary"
               className="shadow-md cursor-pointer py-1 px-5 rounded-md "

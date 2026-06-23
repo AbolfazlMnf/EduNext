@@ -1,7 +1,11 @@
 import { notFound } from "next/navigation";
 import { GetCertificateByCode } from "@/core/services/api/Get/GetCertificateByCode";
 import CertificateDocument from "@/modules/Certificate/CertificateDocument";
+import { metadataGenerator } from "@/Utils/helper/metadata";
 
+export async function generateMetadata() {
+  return metadataGenerator({ title: "EduNext | Certificate" });
+}
 export default async function CertificatePage({
   searchParams,
 }: {

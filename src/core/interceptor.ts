@@ -68,7 +68,7 @@ httpClient.interceptors.response.use(
       if (!refreshToken) {
         deleteCookie("accessToken");
         toast.error("sign in again");
-        window.location.href = "/login";
+        window.location.href = "/auth/login";
         return Promise.reject(error);
       }
 
@@ -95,7 +95,7 @@ httpClient.interceptors.response.use(
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
         toast.error("please login again ");
-        window.location.href = "/login";
+        window.location.href = "/auth/login";
         return Promise.reject(err);
       } finally {
         isRefreshing = false;

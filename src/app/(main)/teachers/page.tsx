@@ -1,5 +1,6 @@
 import { TeachersListClient } from "@/modules/main/Teachers/TeachersListClient";
 import { getAllTeachers } from "@/core/services/api/Get/GetAllTeacher";
+import { metadataGenerator } from "@/Utils/helper/metadata";
 
 type ApiTeacher = {
   _id: string;
@@ -15,6 +16,9 @@ interface PageProps {
     limit?: string;
     search?: string;
   }>;
+}
+export async function generateMetadata() {
+  return metadataGenerator({ title: "EduNext | Teachers" });
 }
 
 export default async function TeachersPage({ searchParams }: PageProps) {

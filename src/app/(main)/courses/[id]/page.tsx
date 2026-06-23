@@ -10,7 +10,24 @@ import { GetCourseByID } from "@/core/services/api/Get/GetCourseByID";
 import ReviewSection from "@/modules/main/CourseDetails/ReviewSection";
 import RelatedCourses from "@/modules/main/CourseDetails/RelatedCourses";
 import Container from "@/components/container/Container";
+import { metadataGenerator } from "@/Utils/helper/metadata";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const course = await GetCourseByID(id);
+  if (!course) {
+    return metadataGenerator({ title: "not found" });
+  }
+
+  return metadataGenerator({
+    title: course.title,
+    description: course.description,
+  });
+}
 export default async function CoursePage({
   params,
 }: {

@@ -46,7 +46,7 @@ export default function NewPasswordForm({ token }: { token: string }) {
       toast.error("Something went wrong ");
     } else if (data) {
       toast.success("password changed successfully ");
-      router.push(`/login`);
+      router.push("/auth/login");
     }
   }, [state]);
   return (
