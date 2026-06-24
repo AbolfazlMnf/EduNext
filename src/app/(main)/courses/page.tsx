@@ -24,6 +24,7 @@ export interface ICourseParams {
 export async function generateMetadata() {
   return metadataGenerator({ title: "EduNext | Courses" });
 }
+
 export default async function CoursesPage({ searchParams }: EventPageProps) {
   const params: ICourseParams = await searchParams;
 
