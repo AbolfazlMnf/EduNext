@@ -19,7 +19,7 @@ async function MainCourses({ params }: { params: ICourseParams }) {
       "@type": "ListItem",
       position: index + 1,
       name: item.title,
-      url: `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${item.__v}`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/courses/${item.__v}`,
     })),
   };
   return (
