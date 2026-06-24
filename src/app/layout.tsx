@@ -8,7 +8,6 @@ import { Toaster } from "@/components/ui/sonner";
 import AuthProvider from "@/components/authProvider/AuthProvider";
 import { ScrollToTop } from "@/components/scrollToTop";
 import { metadataGenerator } from "@/Utils/helper/metadata";
-import { GetSiteSetting } from "@/core/services/api/Get/GetSiteSetting";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,18 +15,8 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const response = await GetSiteSetting();
-
-  const siteTitle = response?.data?.siteTitle || "EduNext Academy";
-
-  return {
-    title: {
-      template: `%s | ${siteTitle}`,
-      default: siteTitle,
-    },
-    description: "Learning Management System for EduNext",
-  };
+export function generateMetadata(): Metadata {
+  return metadataGenerator();
 }
 
 export default function RootLayout({
