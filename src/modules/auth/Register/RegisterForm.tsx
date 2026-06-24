@@ -88,7 +88,7 @@ export default function RegisterForm() {
     mutationFn: registerUser,
     onSuccess: () => {
       toast.success("Account created successfully");
-      router.push("/login");
+      router.push("/auth/login");
     },
     onError: (error: Error) => {
       toast.error(error.message || "Registration failed");
@@ -424,7 +424,7 @@ export default function RegisterForm() {
             >
               Already have an account?{" "}
               <Link
-                href="/login"
+                href="/auth/login"
                 className="text-[#644DB3] font-semibold cursor-pointer"
               >
                 Sign in

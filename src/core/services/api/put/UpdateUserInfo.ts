@@ -1,10 +1,16 @@
+"use server";
+import { IUser, IUserResponse } from "@/modules/layout/header/views/Navbar";
 import { BaseUrl } from "@/Utils/URL";
-import { IUser, IUserInfo } from "../Get/GetUserInfo";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const UpdateUserInfo = async (
   prevData: { data: IUser | null; message: string | null; hasError: boolean },
   formData: FormData,
 ) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("accessToken")?.value as string;
+
   const payload = {
     name: formData.get("name"),
     email: formData.get("email"),
@@ -15,6 +21,7 @@ export const UpdateUserInfo = async (
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(payload),
   });
@@ -25,9 +32,9 @@ export const UpdateUserInfo = async (
       hasError: true,
     };
   }
-  const result = (await res.json()) as IUserInfo;
+  const result = (await res.json()) as IUserResponse;
   return {
-    data: result.user,
+    data: result.data.user,
     message: "updated successfully",
     hasError: false,
   };

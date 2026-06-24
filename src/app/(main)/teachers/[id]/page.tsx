@@ -1,6 +1,7 @@
 import { TeacherDetailClient } from "@/modules/main/Teachers/TeacherDetailClient";
 import { getTeacherById } from "@/core/services/api/Get/GetTeacherById";
 import { notFound } from "next/navigation";
+import { metadataGenerator } from "@/Utils/helper/metadata";
 
 type ApiCourse = {
   _id: string;
@@ -10,6 +11,9 @@ type ApiCourse = {
   rating: number;
   price: number;
 };
+export async function generateMetadata() {
+  return metadataGenerator({ title: "EduNext | Teachers" });
+}
 
 export default async function TeacherDetailPage({
   params,

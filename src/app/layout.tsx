@@ -1,11 +1,13 @@
+import "./globals.css";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import QueryProvider from "@/Utils/ReactQuery/QueryProvider";
 import { ThemeProvider } from "@/components/useThemes/provider";
 import { Toaster } from "@/components/ui/sonner";
 import AuthProvider from "@/components/authProvider/AuthProvider";
 import { ScrollToTop } from "@/components/scrollToTop";
+import { metadataGenerator } from "@/Utils/helper/metadata";
 import { GetSiteSetting } from "@/core/services/api/Get/GetSiteSetting";
 
 const inter = Inter({

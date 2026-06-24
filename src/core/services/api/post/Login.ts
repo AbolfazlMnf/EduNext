@@ -18,7 +18,12 @@ export interface LoginResponseData {
   accessToken: string;
   user: User;
 }
-
+export interface IDecodedToken {
+  id: string;
+  role: string[];
+  exp: number;
+  iat: number;
+}
 export interface LoginResponse {
   success: boolean;
   data: LoginResponseData;
@@ -41,7 +46,7 @@ export const loginUser = async (
         path: "/",
         maxAge: 15 * 60,
         httpOnly: false,
-        secure: process.env.NODE_ENV === "production",
+        secure: false,
       });
     }
 

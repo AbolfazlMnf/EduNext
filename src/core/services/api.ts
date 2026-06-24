@@ -45,7 +45,7 @@ api.interceptors.response.use(
           "accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       }
       if (typeof window !== "undefined") {
-        window.location.href = "/login";
+        window.location.href = "/auth/login";
       }
       return Promise.reject(error);
     }
@@ -80,7 +80,7 @@ api.interceptors.response.use(
             "accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
         }
         if (typeof window !== "undefined") {
-          window.location.href = "/login";
+          window.location.href = "/auth/login";
         }
         return Promise.reject(refreshError);
       }

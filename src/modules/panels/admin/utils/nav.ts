@@ -60,7 +60,7 @@ export const adminBadgeMap: Record<string, string> = {
 };
 
 export const logoutNavItem = {
-  href: "/login",
+  href: "/auth/login",
   label: "Logout",
   icon: LogOut,
 };

@@ -8,11 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  GetAllCategories,
-  ICategoriesData,
-  ICategoriesResponse,
-} from "@/core/services/api/Get/GetAllCategories";
+import { ICategoriesResponse } from "@/core/services/api/Get/GetAllCategories";
 import {
   GetAllLevels,
   ILevelsResponse,
@@ -20,71 +16,112 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { GetAllCategories } from "@/core/services/api/Get/GetAllCategories";
+
+const PRICE_OPTIONS = [
+  { label: "Free", value: "free" },
+  { label: "Paid", value: "paid" },
+];
 
 function SideFilters() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { data: categories, ispending: pendingCats } =
+
+  const { data: categories, isPending: pendingCats } =
     useQuery<ICategoriesResponse>({
       queryKey: ["CATEGORIES"],
-      queryFn: async () => await GetAllCategories(),
+      queryFn: () => GetAllCategories(),
     });
-  const catData = categories?.data ?? [];
-  const { data: Levels, ispending: pendingLevels } = useQuery<ILevelsResponse>({
+
+  const { data: levels, isPending: pendingLevels } = useQuery<ILevelsResponse>({
     queryKey: ["LEVELS"],
-    queryFn: async () => await GetAllLevels(),
+    queryFn: () => GetAllLevels(),
   });
-  const levelsData = Levels?.data ?? [];
+
+  const catData = categories?.data ?? [];
+  const levelsData = levels?.data ?? [];
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    searchParams.get("categories")?.split(",") || [],
+    () => searchParams.get("categories")?.split(",").filter(Boolean) || [],
   );
-  const [selectedPrices, setSelectedPrices] = useState<string | null>(
-    searchParams.get("price") || null,
+  const [selectedPrice, setSelectedPrice] = useState<string | null>(
+    () => searchParams.get("price") || null,
   );
-  const [selectedLevels, setSelectedLevels] = useState<string | null>(
-    searchParams.get("courseLevel") || null,
+  const [selectedLevel, setSelectedLevel] = useState<string | null>(
+    () => searchParams.get("courseLevel") || null,
   );
+
   const pushFiltersToUrl = (
-    categories: string[],
+    cats: string[],
     price: string | null,
     level: string | null,
   ) => {
     const params = new URLSearchParams(searchParams.toString());
-    if (categories.length > 0) params.set("categories", categories.join(","));
-    if (price) params.set("price", price);
-    if (level) params.set("courseLevel", level);
+
+    if (cats.length > 0) {
+      params.set("categories", cats.join(","));
+    } else {
+      params.delete("categories");
+    }
+
+    if (price) {
+      params.set("price", price);
+    } else {
+      params.delete("price");
+    }
+
+    if (level) {
+      params.set("courseLevel", level);
+    } else {
+      params.delete("courseLevel");
+    }
+
     params.set("page", "1");
     router.push(`?${params.toString()}`);
   };
-  const handlechangeCategory = (value: string) => {
-    const newCat = selectedCategories.includes(value)
-      ? selectedCategories.filter((v) => v !== value)
-      : [...selectedCategories, value];
-    setSelectedCategories(newCat);
-    pushFiltersToUrl(newCat, selectedPrices, selectedLevels);
+
+  const handleChangeCategory = (id: string) => {
+    const updated = selectedCategories.includes(id)
+      ? selectedCategories.filter((v) => v !== id)
+      : [...selectedCategories, id];
+    setSelectedCategories(updated);
+    pushFiltersToUrl(updated, selectedPrice, selectedLevel);
   };
+
   const handleChangePrice = (value: string) => {
-    const newPrice = selectedPrices === value ? null : value;
-    setSelectedPrices(newPrice);
-    pushFiltersToUrl(selectedCategories, newPrice, selectedLevels);
+    const updated = selectedPrice === value ? null : value;
+    setSelectedPrice(updated);
+    pushFiltersToUrl(selectedCategories, updated, selectedLevel);
   };
-  const handleChangeLevel = (value: string) => {
-    const newLevel = selectedLevels === value ? null : value;
-    setSelectedLevels(newLevel);
-    pushFiltersToUrl(selectedCategories, selectedPrices, newLevel);
+
+  const handleChangeLevel = (id: string) => {
+    const updated = selectedLevel === id ? null : id;
+    setSelectedLevel(updated);
+    pushFiltersToUrl(selectedCategories, selectedPrice, updated);
   };
+
   const clearFilters = () => {
     setSelectedCategories([]);
-    setSelectedPrices(null);
-    setSelectedLevels(null);
-    router.push(`?`);
+    setSelectedPrice(null);
+    setSelectedLevel(null);
+    router.push("?");
   };
+
+  const hasActiveFilters =
+    selectedCategories.length > 0 ||
+    selectedPrice !== null ||
+    selectedLevel !== null;
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-[32px] font-bold ">Filters</h2>
-      <div className="border-r border-gray-300 pr-4 ">
+      <div className="flex items-center justify-between">
+        <h2 className="text-[32px] font-bold">Filters</h2>
+        {hasActiveFilters && (
+          <span className="text-xs text-primary font-medium">Active</span>
+        )}
+      </div>
+
+      <div className="border-r border-gray-300 pr-4">
         <Accordion
           type="multiple"
           defaultValue={["categories", "price", "level"]}
@@ -92,23 +129,31 @@ function SideFilters() {
           <AccordionItem value="categories">
             <AccordionTrigger className="text-[21px] font-bold">
               Categories
+              {selectedCategories.length > 0 && (
+                <span className="ml-2 rounded-full bg-primary px-2 py-0.5 text-xs text-white">
+                  {selectedCategories.length}
+                </span>
+              )}
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
               {pendingCats
-                ? Array.from({ length: 3 }, (_, i) => (
+                ? Array.from({ length: 4 }, (_, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <Skeleton className="h-4 w-4 rounded-sm" />
-                      <Skeleton className="h-4 w-24" />
+                      <Skeleton className="h-4 w-28" />
                     </div>
                   ))
                 : catData.map((item) => (
                     <div key={item._id} className="flex items-center gap-2">
                       <Checkbox
+                        id={`cat-${item._id}`}
                         checked={selectedCategories.includes(item._id)}
-                        onCheckedChange={() => handlechangeCategory(item._id)}
-                        id={item._id}
+                        onCheckedChange={() => handleChangeCategory(item._id)}
                       />
-                      <label htmlFor={item.name} className="text-sm">
+                      <label
+                        htmlFor={`cat-${item._id}`}
+                        className="cursor-pointer text-sm"
+                      >
                         {item.name}
                       </label>
                     </div>
@@ -121,15 +166,18 @@ function SideFilters() {
               Price
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
-              {["free", "Paid"].map((price) => (
-                <div key={price} className="flex items-center gap-2">
+              {PRICE_OPTIONS.map(({ label, value }) => (
+                <div key={value} className="flex items-center gap-2">
                   <Checkbox
-                    checked={selectedPrices === price}
-                    onCheckedChange={() => handleChangePrice(price)}
-                    id={price}
+                    id={`price-${value}`}
+                    checked={selectedPrice === value}
+                    onCheckedChange={() => handleChangePrice(value)}
                   />
-                  <label htmlFor={price} className="text-sm">
-                    {price}
+                  <label
+                    htmlFor={`price-${value}`}
+                    className="cursor-pointer text-sm"
+                  >
+                    {label}
                   </label>
                 </div>
               ))}
@@ -151,11 +199,14 @@ function SideFilters() {
                 : levelsData.map((level) => (
                     <div key={level._id} className="flex items-center gap-2">
                       <Checkbox
-                        checked={selectedLevels === level._id}
+                        id={`level-${level._id}`}
+                        checked={selectedLevel === level._id}
                         onCheckedChange={() => handleChangeLevel(level._id)}
-                        id={level._id}
                       />
-                      <label htmlFor={level.name} className="text-sm">
+                      <label
+                        htmlFor={`level-${level._id}`}
+                        className="cursor-pointer text-sm"
+                      >
                         {level.name}
                       </label>
                     </div>
@@ -163,10 +214,12 @@ function SideFilters() {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+
         <Button
           variant="ghost"
-          className="mt-3 w-full text-md text-muted-foreground shadow bg-[#ffff] "
-          onClick={() => clearFilters()}
+          className="mt-3 w-full text-md text-muted-foreground shadow bg-white"
+          onClick={clearFilters}
+          disabled={!hasActiveFilters}
         >
           Clear Filters
         </Button>

@@ -27,12 +27,12 @@ export default async function UserPanelLayout({
           <HorizantalNavView />
         </div>
 
-        <div className="flex flex-1 overflow-hidden lg:px-15 py-4">
+        <div className="flex gap-6 flex-1 overflow-hidden lg:px-15 py-4">
           <div className="hidden lg:block lg:w-[20%] h-full">
             <VerticalNavView />
           </div>
 
-          <div className="px-5 w-full lg:w-[80%] h-full overflow-y-auto">
+          <div className=" px-5 md:px-0 w-full lg:w-[80%] h-full overflow-y-auto">
             {children}
           </div>
         </div>

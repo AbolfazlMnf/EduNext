@@ -7,6 +7,8 @@ import { useMutation } from "@tanstack/react-query";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { motion, Variants } from "framer-motion";
+import { jwtDecode } from "jwt-decode";
+
 import {
   Mail,
   House,
@@ -66,6 +68,9 @@ export default function LoginForm() {
     mutationFn: loginUser,
     onSuccess: (data) => {
       if (data.success) {
+        const decoded = jwtDecode(data.data.accessToken);
+        console.log(decoded);
+
         toast.success("Welcome back!");
         router.push("/");
       }

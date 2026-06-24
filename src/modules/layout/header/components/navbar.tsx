@@ -1,17 +1,17 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import { Links } from "../mock/Links";
 import { useTheme } from "@/components/useThemes/useThemes";
-import { getItem } from "@/Utils/helper/storage.services";
 import AuthNav from "../views/AuthNav";
+import { IUser } from "../views/Navbar";
+import { UserMenu } from "../views/User";
+import { deleteCookie } from "cookies-next";
 
-function Navbar() {
-  const token = getItem("accessToken");
-
+function Navbar({ user }: { user?: IUser }) {
   const { toggleTheme } = useTheme();
   const pathName = usePathname();
   const [Open, setOpen] = useState<boolean>(false);
@@ -65,6 +65,7 @@ function Navbar() {
     hidden: { y: 30, opacity: 0 },
     visible: { x: 0, opacity: 1 },
   };
+  const router = useRouter();
   return (
     <>
       <motion.div
@@ -99,26 +100,42 @@ function Navbar() {
             </motion.div>
           ))}
           <motion.div variants={DesktopItemVariants}>
-            <AuthNav />
+            <AuthNav user={user} />
           </motion.div>
         </div>
       </motion.div>
-      <div className="w-full lg:hidden fixed z-50 top-0 px-6 py-6 bg-[#eeee] dark:bg-[#1e1e1e] ">
+      <div
+        className="w-full lg:hidden fixed z-50 top-0 px-6 py-6 bg-[#eeee]
+       dark:bg-[#1e1e1e]"
+      >
         <div className="flex justify-between items-center ">
           <h1 className="text-2xl font-bold ">EduNext</h1>
           <div className="flex gap-6 items-center">
-            <div
-              onClick={toggleTheme}
-              className="rounded-full  items-center justify-center cursor-pointer ml-5 flex lg:hidden"
-            >
-              <Sun
-                size={30}
-                className="text-orange-400 hidden dark:block transition-colors"
-              />
-              <Moon
-                size={30}
-                className="text-slate-700 block dark:hidden transition-colors hover:text-[#644DB3] transition-all duration-100"
-              />
+            <div className="flex items-center gap-4">
+              {user && (
+                <UserMenu
+                  onLogout={() => {
+                    deleteCookie("accessToken");
+                    deleteCookie("refreshToken");
+                    router.refresh();
+                  }}
+                  user={user}
+                />
+              )}
+              <div
+                onClick={toggleTheme}
+                className="rounded-full  items-center justify-center
+                 cursor-pointer  flex lg:hidden"
+              >
+                <Sun
+                  size={35}
+                  className="text-orange-400 hidden dark:block transition-colors"
+                />
+                <Moon
+                  size={35}
+                  className="text-slate-700 block dark:hidden transition-colors hover:text-[#644DB3] transition-all duration-100"
+                />
+              </div>
             </div>
             {Open ? <X onClick={handleOpen} /> : <Menu onClick={handleOpen} />}
           </div>
@@ -162,9 +179,11 @@ function Navbar() {
                     </Link>
                   </motion.span>
                 ))}
-                <motion.div variants={itemVariants}>
-                  <AuthNav />
-                </motion.div>
+                {!user && (
+                  <motion.div variants={itemVariants}>
+                    <AuthNav />
+                  </motion.div>
+                )}
               </motion.div>
             </>
           )}
