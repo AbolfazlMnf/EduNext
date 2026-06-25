@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "edunext-api.onrender.com",
+        hostname: "edunext-api-docker.onrender.com",
         port: "",
         pathname: "/uploads/**",
       },
@@ -32,7 +32,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://edunext-api.onrender.com/api/:path*",
+        destination: "https://edunext-api-docker.onrender.com/api/:path*",
       },
     ];
   },

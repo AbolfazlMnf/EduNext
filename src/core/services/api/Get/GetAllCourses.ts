@@ -43,7 +43,9 @@ export async function GetAllCourses(
 ): Promise<ICourseResult> {
   try {
     const isServer = typeof window === "undefined";
-    const API_BASE = isServer ? "https://edunext-api.onrender.com/api" : "/api";
+    const API_BASE = isServer
+      ? "https://edunext-api-docker.onrender.com/api"
+      : "/api";
 
     const queryString = params
       ? `?${new URLSearchParams(params as Record<string, string>)}`
