@@ -4,19 +4,19 @@ export type NavLink = {
 };
 export const Links: NavLink[] = [
   {
-    title: "home",
+    title: "Home",
     link: "/",
   },
   {
-    title: "courses",
+    title: "Courses",
     link: "/courses",
   },
   {
-    title: "contact us",
-    link: "/contactUs",
+    title: "Teachers",
+    link: "/teachers",
   },
   {
-    title: "blogs",
-    link: "/blogs",
+    title: "Contact us",
+    link: "/contact-us",
   },
 ];
