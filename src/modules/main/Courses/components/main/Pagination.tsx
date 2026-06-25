@@ -8,7 +8,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { FormEvent, useState } from "react";
 
 const CoursesPagination = ({ totalPages }: { totalPages: number }) => {
   const totalPagesNubmer = Number(totalPages);
@@ -24,13 +23,15 @@ const CoursesPagination = ({ totalPages }: { totalPages: number }) => {
     <div className="pt-4 mx-auto ">
       <Pagination>
         <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              onClick={() => {
-                currentPage > 1 && changePage(currentPage - 1);
-              }}
-            />
-          </PaginationItem>
+          {currentPage > 1 && (
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => {
+                  currentPage > 1 && changePage(currentPage - 1);
+                }}
+              />
+            </PaginationItem>
+          )}
           {Array.from({ length: totalPagesNubmer }, (_, i) => (
             <PaginationItem key={i + 1}>
               <PaginationLink
@@ -41,13 +42,15 @@ const CoursesPagination = ({ totalPages }: { totalPages: number }) => {
               </PaginationLink>
             </PaginationItem>
           ))}
-          <PaginationItem>
-            <PaginationNext
-              onClick={() => {
-                currentPage < totalPagesNubmer && changePage(currentPage + 1);
-              }}
-            />
-          </PaginationItem>
+          {totalPages > currentPage && (
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => {
+                  currentPage < totalPagesNubmer && changePage(currentPage + 1);
+                }}
+              />
+            </PaginationItem>
+          )}
         </PaginationContent>
       </Pagination>
     </div>

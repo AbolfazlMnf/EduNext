@@ -75,7 +75,6 @@ const UserInfoForm = ({ userInfo }: { userInfo: IUser | null }) => {
             name="name"
             defaultValue={data?.name || ""}
             placeholder="Enter your full name"
-            className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
           />
         </div>
 
@@ -93,7 +92,6 @@ const UserInfoForm = ({ userInfo }: { userInfo: IUser | null }) => {
             type="email"
             defaultValue={data?.email || ""}
             placeholder="Enter your email"
-            className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
           />
         </div>
         <div className="space-y-2">
@@ -109,7 +107,6 @@ const UserInfoForm = ({ userInfo }: { userInfo: IUser | null }) => {
             name="phoneNumber"
             defaultValue={data?.phoneNumber || ""}
             placeholder="Enter your phone number"
-            className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
           />
         </div>
 
@@ -124,8 +121,7 @@ const UserInfoForm = ({ userInfo }: { userInfo: IUser | null }) => {
                 type="button"
                 variant="outline"
                 className="w-full justify-start px-3 font-normal
-                 bg-gray-50 dark:bg-gray-800 border-gray-200
-                  dark:border-gray-700"
+                 "
               >
                 <CalendarIcon className="w-4 h-4 mr-2" />
                 {date ? formatDateEN(date.toISOString()) : "Pick a date"}
@@ -139,7 +135,7 @@ const UserInfoForm = ({ userInfo }: { userInfo: IUser | null }) => {
               />
             </PopoverContent>
           </Popover>
-          <input
+          <Input
             type="hidden"
             name="birthday"
             value={date ? date.toISOString() : ""}
@@ -152,16 +148,10 @@ const UserInfoForm = ({ userInfo }: { userInfo: IUser | null }) => {
           </Label>
 
           <Select name="gender" defaultValue={data?.gender ?? undefined}>
-            <SelectTrigger
-              className="bg-gray-100 dark:bg-gray-700 border-gray-200
-             dark:border-gray-700 text-gray-600 dark:text-gray-300 cursor-not-allowed"
-            >
+            <SelectTrigger>
               <SelectValue placeholder="Select a gender" />
             </SelectTrigger>
-            <SelectContent
-              className="bg-gray-100 dark:bg-gray-700 border-gray-200
-             dark:border-gray-700 text-gray-600 dark:text-gray-300 cursor-not-allowed"
-            >
+            <SelectContent>
               <SelectGroup>
                 <SelectItem value="male">male</SelectItem>
                 <SelectItem value="female">female</SelectItem>
@@ -185,7 +175,6 @@ const UserInfoForm = ({ userInfo }: { userInfo: IUser | null }) => {
           defaultValue={data?.about || ""}
           placeholder="Tell us about yourself..."
           rows={4}
-          className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 resize-none"
         />
       </div>
       <div className="w-full flex justify-center">

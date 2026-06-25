@@ -1,8 +1,8 @@
 import DashboardContainer from "@/components/container/DashboardContainer";
-import HorizantalNavView from "@/modules/panels/user-panel/view/HorizantalNavView";
-import VerticalNavView from "@/modules/panels/user-panel/view/VerticalNavView";
 import { GetSiteSetting } from "@/core/services/api/Get/GetSiteSetting";
 import Maintenance from "@/modules/panels/admin/components/setting/Maintenance";
+import HorizantalNavView from "@/modules/panels/user-panel/dashboard/view/HorizantalNavView";
+import VerticalNavView from "@/modules/panels/user-panel/dashboard/view/VerticalNavView";
 
 export default async function UserPanelLayout({
   children,

@@ -3,9 +3,17 @@ import { Card } from "@/components/ui/card";
 import { apiFetch } from "@/core/Fetch";
 import { ICertificateResponse } from "../types";
 import { CertificateCard } from "../components/CertificateCard";
+import CoursesPagination from "@/modules/main/Courses/components/main/Pagination";
+import TopFilters from "@/components/Filters/TopFilters";
 
-export default async function CertificateView() {
-  const res = await apiFetch<ICertificateResponse>("/user-panel/certificates");
+export default async function CertificateView({
+  params,
+}: {
+  params: Record<string, string>;
+}) {
+  const res = await apiFetch<ICertificateResponse>("/user-panel/certificates", {
+    params,
+  });
   let certificates = null;
   if ("data" in res) {
     certificates = res.data;
@@ -59,6 +67,9 @@ export default async function CertificateView() {
           </p>
         </div>
       </div>
+      <div>
+        <TopFilters />
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat) => {
@@ -94,13 +105,13 @@ export default async function CertificateView() {
       </div>
 
       {certificates?.length === 0 && (
-        <Card className="bg-white border-2 border-dashed border-[#E2D9C8] shadow-sm">
-          <div className="p-16 text-center">
+        <Card>
+          <div className="py-16 text-center">
             <div className="w-24 h-24 mx-auto mb-6 rounded-2xl bg-[#F0E3D0] flex items-center justify-center">
               <Award className="w-12 h-12 text-[#C8853F]" strokeWidth={2} />
             </div>
             <h3
-              className="text-2xl font-bold text-[#1F2421] mb-3"
+              className="text-2xl font-bold text-foreground mb-3"
               style={{ fontFamily: "DM Serif Display, serif" }}
             >
               No certificates <span className="italic text-[#C8853F]">yet</span>
@@ -119,6 +130,13 @@ export default async function CertificateView() {
           ))}
         </div>
       )}
+      <div>
+        <CoursesPagination
+          totalPages={
+            "meta" in res ? Math.ceil(res.meta.total / res.meta.limit) : 1
+          }
+        />
+      </div>
     </div>
   );
 }

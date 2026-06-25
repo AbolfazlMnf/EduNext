@@ -98,7 +98,9 @@ export const PostNewPass = async (
   if (error) return { data: prevData.data, error };
 
   const isServer = typeof window === "undefined";
-  const API_BASE = isServer ? "https://edunext-api.onrender.com/api" : "/api";
+  const API_BASE = isServer
+    ? "https://edunext-api-docker.onrender.com/api"
+    : "/api";
 
   try {
     const finalPayload = {

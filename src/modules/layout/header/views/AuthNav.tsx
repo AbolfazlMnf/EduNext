@@ -15,14 +15,7 @@ function AuthNav({ user }: { user?: IUser }) {
   return (
     <div className=" flex flex-col gap-3 lg:gap-0 lg:flex-row lg:items-center  ">
       {user ? (
-        <UserMenu
-          onLogout={() => {
-            deleteCookie("accessToken");
-            deleteCookie("refreshToken");
-            router.refresh();
-          }}
-          user={user}
-        />
+        <UserMenu user={user} />
       ) : (
         <div>
           <Link href="/auth/login">

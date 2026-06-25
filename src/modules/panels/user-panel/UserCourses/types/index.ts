@@ -1,8 +1,14 @@
 export interface IMyCoursesResponse {
   status: string;
   data: IEnrolledCourse[];
+  meta: IMeta;
 }
-
+export interface IMeta {
+  total: number;
+  pages: number;
+  page: number;
+  limit: number;
+}
 export interface IEnrolledCourse {
   course: ICourse;
   teacher: ITeacher;

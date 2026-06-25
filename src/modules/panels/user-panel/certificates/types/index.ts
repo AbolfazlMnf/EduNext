@@ -1,6 +1,9 @@
+import { IMeta } from "../../UserCourses/types";
+
 export interface ICertificateResponse {
   status: string;
   data: ICertificate[];
+  meta: IMeta;
 }
 
 export interface ICertificate {

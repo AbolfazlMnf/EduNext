@@ -6,11 +6,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
 function CoursesSort() {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const router = useRouter();
   const limit: string | null = searchParams.get("limit") || null;
   const sort: string | null = searchParams.get("sort") || null;
@@ -22,12 +23,19 @@ function CoursesSort() {
     { id: "price_asc", name: "cheapest" },
   ];
   const sortName = sortOptions.find((v) => v.id === sort)?.name || null;
+
   const updateParams = (key: string, value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set(key, value);
-    params.set("page", "1");
-    router.push(`?${params.toString()}`);
+    const param = new URLSearchParams(searchParams.toString());
+    if (value) {
+      param.set(key, value);
+    } else {
+      param.delete(key);
+    }
+    param.set("page", "1");
+
+    router.replace(`${pathname}?${param.toString()}`);
   };
+
   return (
     <div className="flex items-center gap-3">
       <div>

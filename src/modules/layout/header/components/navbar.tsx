@@ -112,16 +112,7 @@ function Navbar({ user }: { user?: IUser }) {
           <h1 className="text-2xl font-bold ">EduNext</h1>
           <div className="flex gap-6 items-center">
             <div className="flex items-center gap-4">
-              {user && (
-                <UserMenu
-                  onLogout={() => {
-                    deleteCookie("accessToken");
-                    deleteCookie("refreshToken");
-                    router.refresh();
-                  }}
-                  user={user}
-                />
-              )}
+              {user && <UserMenu user={user} />}
               <div
                 onClick={toggleTheme}
                 className="rounded-full  items-center justify-center

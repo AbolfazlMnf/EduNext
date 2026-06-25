@@ -1,8 +1,7 @@
-import { apiFetch } from "@/core/Fetch";
 import { GetAllCourses } from "@/core/services/api/Get/GetAllCourses";
 import { MetadataRoute } from "next";
 
-export const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
+const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const routes: MetadataRoute.Sitemap = [
     {
       url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/`,
@@ -38,3 +37,4 @@ export const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
 
   return routes;
 };
+export default sitemap;

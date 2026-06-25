@@ -19,7 +19,7 @@ import { IUser } from "@/modules/layout/header/views/Navbar";
 
 export async function UserInfo({ user }: { user: IUser | null }) {
   return (
-    <Card className="border-0 shadow-xl bg-white dark:bg-gray-900 py-4 ">
+    <Card className="border-0 shadow-x py-4 ">
       <CardHeader className="border-b border-gray-100 dark:border-gray-800">
         <CardTitle className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
           <User className="w-5 h-5 text-indigo-500" />

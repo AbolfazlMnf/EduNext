@@ -45,7 +45,7 @@ httpClient.interceptors.response.use(
       _retry?: boolean;
     };
     if (error.response?.status === 403) {
-      toast.error("شما دسترسی لازم برای این بخش را ندارید");
+      toast.error("dont have the access needed");
       window.location.href = "/";
     }
     if (error.response?.status === 401 && !originalRequest._retry) {
