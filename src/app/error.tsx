@@ -29,7 +29,7 @@ export default function GlobalError({
         />
 
         <p className="text-gray-500 dark:text-gray-400 text-center max-w-xs">
-          {error.message}
+          Something Went Wrong !
         </p>
 
         <Button
