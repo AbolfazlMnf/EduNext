@@ -9,16 +9,18 @@ import { cn } from "@/lib/utils";
 import { adminNavItems, logoutNavItem } from "../utils/nav";
 import AdminProfileModal from "./AdminProfileModal";
 import type { UserProfile } from "@/core/services/api/Get/GetUserInfoAdmin";
+import { useState } from "react";
 
 function NavList({
   mobile = false,
   user,
+  onNavigate,
 }: {
   mobile?: boolean;
   user: UserProfile | null;
+  onNavigate?: () => void;
 }) {
   const pathname = usePathname();
-
   const displayName = user?.name || "Admin User";
   const displayRole = user?.role?.join(" , ") || "Admin";
   const initials = displayName.substring(0, 2).toUpperCase();
@@ -43,7 +45,7 @@ function NavList({
         {adminNavItems.map((item) => {
           const active =
             item.href === "/panels/admin"
-              ? pathname === "/admin"
+              ? pathname === "/panels/admin"
               : pathname.startsWith(item.href);
 
           const Icon = item.icon;
@@ -52,6 +54,7 @@ function NavList({
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => onNavigate?.()}
               className={cn(
                 "group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all",
                 active
@@ -113,9 +116,11 @@ function DesktopSidebar({ user }: { user: UserProfile | null }) {
 }
 
 export function MobileSidebar({ user }: { user: UserProfile | null }) {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="lg:hidden ">
-      <Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button
             variant="ghost"
@@ -127,9 +132,9 @@ export function MobileSidebar({ user }: { user: UserProfile | null }) {
         </SheetTrigger>
         <SheetContent
           side="left"
-          className="w-[88vw] max-w-[240px] sm:max-w-[320px] bg-white/95 p-4 z-[100] dark:bg-[#333]"
+          className="w-[88vw] max-w-[280px] sm:max-w-[320px] bg-white/100 p-4 z-[100] dark:bg-[#333]"
         >
-          <NavList mobile user={user} />
+          <NavList mobile user={user} onNavigate={() => setOpen(false)} />
         </SheetContent>
       </Sheet>
     </div>
@@ -140,9 +145,6 @@ export function AdminSidebar({ user }: { user: UserProfile | null }) {
   return (
     <>
       <DesktopSidebar user={user} />
-      <div className="fixed left-4 top-5.5 sm:top-7 z-50 lg:hidden">
-        <MobileSidebar user={user} />
-      </div>
     </>
   );
 }

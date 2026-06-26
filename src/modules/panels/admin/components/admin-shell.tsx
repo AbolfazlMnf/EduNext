@@ -14,7 +14,7 @@ export function AdminShell({
   user: UserProfile | null;
 }) {
   return (
-    <div className="min-h-screen !dark:bg-[red] bg-gradient-to-br from-[#fbf8ff] via-[#f8f4ff] to-[#f4efff] text-slate-900 overflow-x-hidden ">
+    <div className="min-h-screen dark:bg-none dark:!bg-[#1e1e1e] bg-gradient-to-br from-[#fbf8ff] via-[#f8f4ff] to-[#f4efff] text-slate-900 overflow-x-hidden ">
       <AdminSidebar user={user} />
       <div className="lg:pl-72">
         <AdminTopbar user={user} />

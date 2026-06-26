@@ -6,8 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { adminTitleMap } from "../utils/nav";
 import { useTheme } from "@/components/useThemes/useThemes";
 import type { UserProfile } from "@/core/services/api/Get/GetUserInfoAdmin";
-
 import Link from "next/link";
+import { MobileSidebar } from "./admin-sidebar";
 
 export function AdminTopbar({ user }: { user: UserProfile | null }) {
   const { toggleTheme } = useTheme();
@@ -20,12 +20,15 @@ export function AdminTopbar({ user }: { user: UserProfile | null }) {
   return (
     <header className="sticky top-0 z-30 border-b border-white/70 bg-white/55 dark:border-[#333] backdrop-blur-xl dark:bg-[#333]">
       <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8 lg:pl-8">
+        <div className="lg:hidden">
+          <MobileSidebar user={user} />
+        </div>
         <div>
           <h1 className=" hidden lg:flex mt-2 text-sm font-semibold tracking-tight text-slate-900 sm:text-3xl dark:text-white">
             {title}
           </h1>
           <p className="mt-1 text-sm text-slate-500 dark:text-[#ccc] hidden lg:flex">
-            Welcome back , Here’s what is happening today.
+            Welcome back , {user?.name || ""} Here’s what is happening today
           </p>
         </div>
 
