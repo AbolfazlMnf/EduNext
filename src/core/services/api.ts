@@ -57,9 +57,15 @@ api.interceptors.response.use(
     ) {
       originalRequest._retry = true;
 
+      // try {
+      //   const res = await axios.post<RefreshResponse>(
+      //     `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh-token`,
+      //     {},
+      //     { withCredentials: true },
+      //   );
       try {
-        const res = await axios.post<RefreshResponse>(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh-token`,
+        const res = await api.post<RefreshResponse>(
+          "/auth/refresh-token",
           {},
           { withCredentials: true },
         );
