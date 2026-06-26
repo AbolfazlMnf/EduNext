@@ -7,10 +7,11 @@ export interface IError {
   errorMessage: string;
   status: number;
 }
+
 type FetchOptions = {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   params?: Record<string, string | number | boolean | string[]>;
-  body?: any;
+  body?: unknown;
   headers?: HeadersInit;
   cache?: RequestCache;
   next?: NextFetchRequestConfig;
@@ -24,18 +25,17 @@ function buildUrl(url: string, params?: FetchOptions["params"]) {
   return `${url}?${queries}`;
 }
 
-export async function apiFetch<T = any>(
+export async function apiFetch<T>(
   endpoint: string,
   options: FetchOptions = {},
 ): Promise<T | IError> {
   try {
     const cookieStore = await cookies();
-
     const accessToken = cookieStore.get("accessToken")?.value;
 
     const url = buildUrl(`${API_URL}${endpoint}`, options.params);
-
     const headers = new Headers(options.headers);
+
     if (accessToken) {
       headers.set("Authorization", `Bearer ${accessToken}`);
     }
@@ -61,7 +61,7 @@ export async function apiFetch<T = any>(
       headers,
       cache: options.cache,
       next: options.next,
-      body: options.method === "GET" ? undefined : body,
+      body: options.method === "GET" ? undefined : (body as BodyInit),
     };
 
     console.log("Fetching URL:", url);
@@ -74,7 +74,6 @@ export async function apiFetch<T = any>(
 
     if (!res.ok) {
       const text = await res.text();
-
       return {
         errorMessage: text || "Server Error",
         status: res.status,
@@ -92,18 +91,20 @@ export async function apiFetch<T = any>(
     }
 
     return (await res.text()) as T;
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (
-      error?.digest === "NEXT_REDIRECT" ||
-      error?.message === "NEXT_REDIRECT"
+      typeof error === "object" &&
+      error !== null &&
+      "digest" in error &&
+      (error as { digest: string }).digest === "NEXT_REDIRECT"
     ) {
       throw error;
     }
 
     console.error("Fetch Wrapper Error:", error);
     return {
-      errorMessage: error?.message || "server error",
-      status: error?.status || 500,
+      errorMessage: error instanceof Error ? error.message : "server error",
+      status: 500,
     };
   }
 }

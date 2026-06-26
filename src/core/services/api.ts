@@ -17,6 +17,23 @@ const api = axios.create({
   withCredentials: true,
 });
 
+let isRefreshing = false;
+let failedQueue: Array<{
+  resolve: (token: string) => void;
+  reject: (error: unknown) => void;
+}> = [];
+
+const processQueue = (error: unknown, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else if (token) {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   if (typeof document !== "undefined") {
     const match = document.cookie.match(/(^|;)\s*accessToken\s*=\s*([^;]+)/);
@@ -55,7 +72,19 @@ api.interceptors.response.use(
       !originalRequest._retry &&
       !originalRequest.url?.includes("/auth/login")
     ) {
+      if (isRefreshing) {
+        return new Promise<string>((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then((token) => {
+            originalRequest.headers["Authorization"] = `Bearer ${token}`;
+            return api(originalRequest);
+          })
+          .catch((err) => Promise.reject(err));
+      }
+
       originalRequest._retry = true;
+      isRefreshing = true;
 
       try {
         const res = await api.post<RefreshResponse>(
@@ -75,10 +104,12 @@ api.interceptors.response.use(
           api.defaults.headers.common["Authorization"] =
             `Bearer ${newAccessToken}`;
           originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-        }
 
-        return api(originalRequest);
+          processQueue(null, newAccessToken);
+          return api(originalRequest);
+        }
       } catch (refreshError: unknown) {
+        processQueue(refreshError, null);
         if (typeof document !== "undefined") {
           document.cookie =
             "accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
@@ -87,6 +118,8 @@ api.interceptors.response.use(
           window.location.href = "/auth/login";
         }
         return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
       }
     }
 
