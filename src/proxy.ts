@@ -17,7 +17,8 @@ export default async function proxy(req: NextRequest) {
   const isNeedRefresh =
     refreshToken && (!accessToken || isTokenExpired(accessToken));
 
-  const response = NextResponse.next();
+  let response = NextResponse.next();
+  const requestHeaders = new Headers(req.headers);
 
   if (isNeedRefresh) {
     try {
@@ -25,41 +26,59 @@ export default async function proxy(req: NextRequest) {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh-token`,
         {
           method: "POST",
-          body: JSON.stringify({ refreshToken }),
           headers: {
             "Content-Type": "application/json",
+            Cookie: `refreshToken=${refreshToken}`,
           },
         },
       );
 
       if (!res.ok) {
-        response.cookies.delete("accessToken");
-        response.cookies.delete("refreshToken");
-
-        if (isProtectedRoute) {
-          return NextResponse.redirect(new URL("/auth/login", req.url));
+        if (res.status === 401 || res.status === 403) {
+          response.cookies.delete("accessToken");
+          response.cookies.delete("refreshToken");
+          if (isProtectedRoute) {
+            return NextResponse.redirect(new URL("/auth/login", req.url));
+          }
         }
         return response;
       }
 
       const data = await res.json();
-      accessToken = data.data.accessToken;
+      accessToken = data.accessToken;
+
       if (accessToken) {
-        response.cookies.set("accessToken", accessToken);
+        requestHeaders.set("Authorization", `Bearer ${accessToken}`);
+
+        response = NextResponse.next({
+          request: {
+            headers: requestHeaders,
+          },
+        });
+
+        response.cookies.set("accessToken", accessToken, {
+          path: "/",
+          maxAge: 15 * 60,
+          httpOnly: false,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+        });
       }
     } catch (error) {
-      response.cookies.delete("accessToken");
-      response.cookies.delete("refreshToken");
-
-      if (isProtectedRoute) {
-        return NextResponse.redirect(new URL("/auth/login", req.url));
-      }
+      console.error("Failed to refresh token in middleware:", error);
     }
+  } else if (accessToken) {
+    requestHeaders.set("Authorization", `Bearer ${accessToken}`);
+    response = NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
   }
 
   return response;
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/).*)"],
 };
