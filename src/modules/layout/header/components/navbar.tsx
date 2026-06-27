@@ -88,10 +88,10 @@ function Navbar({ user }: { user?: IUser }) {
             <motion.div variants={DesktopItemVariants} key={index}>
               <Link
                 href={items.link}
-                className={` transition-all duration-150 ease-in-out hover:font-bold  hover:text-lg
+                className={`inline-flex transition-all duration-150 font-smibold ease-in-out hover:text-violet-600 hover:scale-110
                  ${
                    pathName == items.link
-                     ? "font-bold border-b-2 border-b-blue-400 text-md "
+                     ? "font-bold border-b-2 border-b-violet-600 text-md py-2 "
                      : ""
                  }   `}
               >
