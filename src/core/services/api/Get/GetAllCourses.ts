@@ -60,7 +60,7 @@ export async function GetAllCourses(
     const result: ICourseResult = await res.json();
     return result;
   } catch (error) {
-    console.error("Fetch Error:", error);
+    console.error("Fetch Errorr:", error);
     return {
       success: false,
       data: [],
