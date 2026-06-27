@@ -24,10 +24,10 @@ import loading from "@/assets/Lottie/Loader.json";
 import { useMutation } from "@tanstack/react-query";
 import { deleteCommentAdmin } from "@/core/services/api/delete/DeleteComment";
 import { confirmCommentAdmin } from "@/core/services/api/patch/ConfirmComment";
-import type { MappedReply } from "@/core/services/api/Get/GetReplyCommentAdmin";
+import type { MappedReply } from "@/core/services/api/get/getReplyCommentAdmin";
 import { toast } from "sonner";
-import type { MappedComment } from "@/core/services/api/Get/GetAllCommentAdmin";
-import type { AdminCourse } from "@/core/services/api/Get/GetAllCoursesAdmin";
+import type { MappedComment } from "@/core/services/api/get/getAllCommentAdmin";
+import type { AdminCourse } from "@/core/services/api/get/getAllCoursesAdmin";
 import Lottie from "lottie-react";
 
 import { CommentManagementDesktop } from "./comments-management-desktop";

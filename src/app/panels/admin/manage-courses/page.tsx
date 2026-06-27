@@ -1,9 +1,9 @@
 export const dynamic = "force-dynamic";
 
 import { ManageCourses } from "@/modules/panels/admin/components/manage-courses/manage-courses";
-import { getAllCoursesAdmin } from "@/core/services/api/Get/GetAllCoursesAdmin";
-import { getAllCategoryAdmin } from "@/core/services/api/Get/GetAllCategoryAdmin";
-import { getAllLevelsAdmin } from "@/core/services/api/Get/GetAllLevelsAdmin";
+import { getAllCoursesAdmin } from "@/core/services/api/get/getAllCoursesAdmin";
+import { getAllCategoryAdmin } from "@/core/services/api/get/getAllCategoryAdmin";
+import { getAllLevelsAdmin } from "@/core/services/api/get/getAllLevelsAdmin";
 
 interface PageProps {
   searchParams?: Promise<{

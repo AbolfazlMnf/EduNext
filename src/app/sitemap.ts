@@ -1,4 +1,4 @@
-import { GetAllCourses } from "@/core/services/api/Get/GetAllCourses";
+import { GetAllCourses } from "@/core/services/api/get/getAllCourses";
 import { MetadataRoute } from "next";
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {

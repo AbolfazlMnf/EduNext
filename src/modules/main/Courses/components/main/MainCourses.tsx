@@ -2,7 +2,7 @@ import {
   GetAllCourses,
   ICourseData,
   ICourseResult,
-} from "@/core/services/api/Get/GetAllCourses";
+} from "@/core/services/api/get/getAllCourses";
 import CourseCard from "../../views/CourseCard";
 import CoursesPagination from "./Pagination";
 import CoursesSort from "./sort";

@@ -7,9 +7,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
 import { createCourseAdmin } from "@/core/services/api/post/CreateCourse";
-import { getAllTeachers } from "@/core/services/api/Get/GetAllTeacher";
-import type { AdminCategory } from "@/core/services/api/Get/GetAllCategoryAdmin";
-import type { AdminLevel } from "@/core/services/api/Get/GetAllLevelsAdmin";
+import { getAllTeachers } from "@/core/services/api/get/getAllTeacher";
+import type { AdminCategory } from "@/core/services/api/get/getAllCategoryAdmin";
+import type { AdminLevel } from "@/core/services/api/get/getAllLevelsAdmin";
 import {
   Dialog,
   DialogContent,

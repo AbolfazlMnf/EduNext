@@ -1,4 +1,4 @@
-import { ICourseResult } from "@/core/services/api/Get/GetAllCourses";
+import { ICourseResult } from "@/core/services/api/get/getAllCourses";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

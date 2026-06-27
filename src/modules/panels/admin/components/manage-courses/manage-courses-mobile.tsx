@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { AdminCourse } from "@/core/services/api/Get/GetAllCoursesAdmin";
+import type { AdminCourse } from "@/core/services/api/get/getAllCoursesAdmin";
 import type { UpdateCourseData } from "./modals/updateCourseForm";
 import type { ViewCourseData } from "./modals/courseViewModal";
 

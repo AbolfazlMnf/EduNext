@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { Suspense } from "react";
 import { UserManagement } from "@/modules/panels/admin/components/user-management/user-management";
-import { getAllUsers } from "@/core/services/api/Get/GetAllUser";
+import { getAllUsers } from "@/core/services/api/get/getAllUser";
 
 interface PageSearchParams {
   page?: string;

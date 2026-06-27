@@ -9,8 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { GetExamByCourse } from "@/core/services/api/Get/GetExam";
-import { GetQuestionsByExam } from "@/core/services/api/Get/GetQuestion";
 import {
   SubmitExam,
   SubmitExamPayload,
@@ -19,6 +17,8 @@ import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import Lottie from "lottie-react";
 import Empty from "@/assets/Lottie/Empty.json";
+import { GetQuestionsByExam } from "@/core/services/api/get/getQuestion";
+import { GetExamByCourse } from "@/core/services/api/get/getExam";
 
 interface ExamModalProps {
   courseId: string;

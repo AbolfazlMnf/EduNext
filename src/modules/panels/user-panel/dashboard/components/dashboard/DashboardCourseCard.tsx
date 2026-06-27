@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { ICourseData } from "@/core/services/api/Get/GetAllCourses";
+import { ICourseData } from "@/core/services/api/get/getAllCourses";
 
 export default function DashboardCourseCard({
   course,

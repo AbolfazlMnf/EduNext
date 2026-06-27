@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useQuery } from "@tanstack/react-query";
-import { getCommentReply } from "@/core/services/api/Get/getCommentReply";
+import { getCommentReply } from "@/core/services/api/get/getCommentReply";
 import Empty from "@/assets/Lottie/Empty.json";
 import Lottie from "lottie-react";
 

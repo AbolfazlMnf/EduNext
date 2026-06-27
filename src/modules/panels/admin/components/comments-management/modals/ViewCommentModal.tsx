@@ -5,7 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import type { MappedComment } from "@/core/services/api/Get/GetAllCommentAdmin";
+import type { MappedComment } from "@/core/services/api/get/getAllCommentAdmin";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 

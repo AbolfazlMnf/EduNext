@@ -5,7 +5,7 @@ import Image from "next/image";
 import Lottie from "lottie-react";
 import { Badge } from "@/components/ui/badge";
 import Empty from "@/assets/Lottie/Empty.json";
-import type { CoursesPageData } from "@/core/services/api/Get/GetAllCoursesAdmin";
+import type { CoursesPageData } from "@/core/services/api/get/getAllCoursesAdmin";
 
 type Props = {
   coursesData: CoursesPageData;

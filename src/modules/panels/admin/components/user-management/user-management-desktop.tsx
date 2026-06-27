@@ -18,7 +18,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import type { AdminUser } from "@/core/services/api/Get/GetAllUser";
+import type { AdminUser } from "@/core/services/api/get/getAllUser";
 
 type RoleIconMap = Record<string, { icon: LucideIcon; label: string }>;
 

@@ -18,9 +18,9 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PaginationComp } from "@/components/PaginationComp";
-import type { AllPaymentsPageData } from "@/core/services/api/Get/GetAllPayment";
+import type { AllPaymentsPageData } from "@/core/services/api/get/getAllPayment";
 import { useState, useEffect, useTransition } from "react";
-import { getAllPayments } from "@/core/services/api/Get/GetAllPayment";
+import { getAllPayments } from "@/core/services/api/get/getAllPayment";
 import Lottie from "lottie-react";
 import loading from "@/assets/Lottie/Loader.json";
 

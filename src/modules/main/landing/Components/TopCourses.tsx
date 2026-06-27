@@ -46,7 +46,7 @@ import {
   GetAllCourses,
   ICourseData,
   ICourseResult,
-} from "@/core/services/api/Get/GetAllCourses";
+} from "@/core/services/api/get/getAllCourses";
 
 async function TopCourses() {
   const courses: ICourseResult = await GetAllCourses();

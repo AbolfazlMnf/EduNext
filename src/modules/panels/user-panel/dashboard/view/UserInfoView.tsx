@@ -1,4 +1,4 @@
-import { getUser } from "@/core/services/api/Get/GetUser";
+import { getUser } from "@/core/services/api/get/getUser";
 import { UserInfo } from "../../user-info/UserInfo";
 
 export const UserInfoView = async () => {

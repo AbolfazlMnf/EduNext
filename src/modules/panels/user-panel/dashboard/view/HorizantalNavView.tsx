@@ -1,6 +1,5 @@
-import { getUserInfo } from "@/core/services/api/Get/GetUserInfo";
 import HorizontalNav from "../components/HorizontalNav";
-import { getUser } from "@/core/services/api/Get/GetUser";
+import { getUser } from "@/core/services/api/get/getUser";
 
 const HorizantalNavView = async () => {
   const user = await getUser();

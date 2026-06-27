@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { getRelatedCourses } from "@/core/services/api/Get/GetRelatedCourse";
+import { getRelatedCourses } from "@/core/services/api/get/getRelatedCourse";
 
 interface RelatedCoursesProps {
   courseId: string;

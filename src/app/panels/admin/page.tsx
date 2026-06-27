@@ -1,12 +1,12 @@
 import { AdminDashboard } from "@/modules/panels/admin/components/dashboard";
-import { getAdminReports } from "@/core/services/api/Get/GetAdminReports";
-import { getAllCoursesAdmin } from "@/core/services/api/Get/GetAllCoursesAdmin";
-import { getAllCategoryAdmin } from "@/core/services/api/Get/GetAllCategoryAdmin";
-import { getAllLevelsAdmin } from "@/core/services/api/Get/GetAllLevelsAdmin";
-import { getLatestTransactions } from "@/core/services/api/Get/GetLatestTransaction";
-import { getAllPayments } from "@/core/services/api/Get/GetAllPayment";
-import { getAllUsers } from "@/core/services/api/Get/GetAllUser";
-import { getSalesOverview } from "@/core/services/api/Get/GetSalesOverview";
+import { getAdminReports } from "@/core/services/api/get/getAdminReports";
+import { getAllCoursesAdmin } from "@/core/services/api/get/getAllCoursesAdmin";
+import { getAllCategoryAdmin } from "@/core/services/api/get/getAllCategoryAdmin";
+import { getAllLevelsAdmin } from "@/core/services/api/get/getAllLevelsAdmin";
+import { getLatestTransactions } from "@/core/services/api/get/getLatestTransaction";
+import { getAllPayments } from "@/core/services/api/get/getAllPayment";
+import { getAllUsers } from "@/core/services/api/get/getAllUser";
+import { getSalesOverview } from "@/core/services/api/get/getSalesOverview";
 
 type PageProps = {
   searchParams: Promise<{

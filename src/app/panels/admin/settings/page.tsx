@@ -1,5 +1,5 @@
 import { SettingsForm } from "@/modules/panels/admin/components/setting/settings-form";
-import { GetSiteSetting } from "@/core/services/api/Get/GetSiteSetting";
+import { GetSiteSetting } from "@/core/services/api/get/getSiteSetting";
 
 export default async function Page() {
   const response = await GetSiteSetting();

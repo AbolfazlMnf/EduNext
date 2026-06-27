@@ -1,5 +1,5 @@
 import { TeachersListClient } from "@/modules/main/Teachers/TeachersListClient";
-import { getAllTeachers } from "@/core/services/api/Get/GetAllTeacher";
+import { getAllTeachers } from "@/core/services/api/get/getAllTeacher";
 import { metadataGenerator } from "@/Utils/helper/metadata";
 
 type ApiTeacher = {

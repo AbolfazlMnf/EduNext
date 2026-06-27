@@ -1,4 +1,4 @@
-import { ICourseParams } from "./../../../../app/(main)/courses/page";
+import { ICourseParams } from "../../../../app/(main)/courses/page";
 
 export interface ICourseResult {
   success: boolean;

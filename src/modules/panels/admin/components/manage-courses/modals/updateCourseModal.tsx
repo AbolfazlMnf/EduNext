@@ -8,9 +8,9 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { isAxiosError } from "axios";
 import { updateCourseAdmin } from "@/core/services/api/put/UpdateCourse";
-import { getAllTeachers } from "@/core/services/api/Get/GetAllTeacher";
-import type { AdminCategory } from "@/core/services/api/Get/GetAllCategoryAdmin";
-import type { AdminLevel } from "@/core/services/api/Get/GetAllLevelsAdmin";
+import { getAllTeachers } from "@/core/services/api/get/getAllTeacher";
+import type { AdminCategory } from "@/core/services/api/get/getAllCategoryAdmin";
+import type { AdminLevel } from "@/core/services/api/get/getAllLevelsAdmin";
 import {
   Dialog,
   DialogContent,

@@ -30,7 +30,7 @@ import {
   GraduationCap,
   UserRound,
 } from "lucide-react";
-import type { UserByIdApiData } from "@/core/services/api/Get/GetUserById";
+import type { UserByIdApiData } from "@/core/services/api/get/getUserById";
 import Lottie from "lottie-react";
 import Loader from "@/assets/Lottie/Loader.json";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";

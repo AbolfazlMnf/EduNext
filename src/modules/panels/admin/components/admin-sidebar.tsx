@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { adminNavItems, logoutNavItem } from "../utils/nav";
 import AdminProfileModal from "./AdminProfileModal";
-import type { UserProfile } from "@/core/services/api/Get/GetUserInfoAdmin";
+import type { UserProfile } from "@/core/services/api/get/getUserInfoAdmin";
 import { useState } from "react";
 
 function NavList({

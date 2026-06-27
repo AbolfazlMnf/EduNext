@@ -1,10 +1,10 @@
 import { ExamManagement } from "@/modules/panels/admin/components/exam-management/exam-management";
-import { getAllCoursesAdmin } from "@/core/services/api/Get/GetAllCoursesAdmin";
-import { getExamAdmin, ApiExam } from "@/core/services/api/Get/GetExamAdmin";
+import { getAllCoursesAdmin } from "@/core/services/api/get/getAllCoursesAdmin";
+import { getExamAdmin, ApiExam } from "@/core/services/api/get/getExamAdmin";
 import {
   getQuestionsAdmin,
   ApiQuestion,
-} from "@/core/services/api/Get/GetQuestionAdmin";
+} from "@/core/services/api/get/getQuestionAdmin";
 
 interface PageProps {
   searchParams: Promise<{ courseId?: string }> | { courseId?: string };

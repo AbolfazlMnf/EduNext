@@ -13,7 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import Lottie from "lottie-react";
 import Empty from "@/assets/Lottie/Empty.json";
-import type { MappedComment } from "@/core/services/api/Get/GetAllCommentAdmin";
+import type { MappedComment } from "@/core/services/api/get/getAllCommentAdmin";
 
 interface CommentManagementDesktopProps {
   comments: MappedComment[];

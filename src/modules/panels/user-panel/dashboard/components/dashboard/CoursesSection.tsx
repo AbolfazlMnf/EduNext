@@ -1,5 +1,5 @@
 import { ArrowRight, BookOpen } from "lucide-react";
-import { ICourseData } from "@/core/services/api/Get/GetAllCourses";
+import { ICourseData } from "@/core/services/api/get/getAllCourses";
 import Link from "next/link";
 import { MyCourseCard } from "../../../UserCourses/components/UserCourseCard";
 import { IEnrolledCourse } from "../../../UserCourses/types";

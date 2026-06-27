@@ -1,7 +1,7 @@
 import { SalesReports } from "@/modules/panels/admin/components/sales-reports/sales-reports";
-import { getSalesOverview } from "@/core/services/api/Get/GetSalesOverview";
-import { getAllPayments } from "@/core/services/api/Get/GetAllPayment";
-import { getLatestTransactions } from "@/core/services/api/Get/GetLatestTransaction";
+import { getSalesOverview } from "@/core/services/api/get/getSalesOverview";
+import { getAllPayments } from "@/core/services/api/get/getAllPayment";
+import { getLatestTransactions } from "@/core/services/api/get/getLatestTransaction";
 
 type PageProps = {
   searchParams: Promise<{

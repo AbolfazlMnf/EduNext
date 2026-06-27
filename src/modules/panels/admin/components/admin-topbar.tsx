@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { adminTitleMap } from "../utils/nav";
 import { useTheme } from "@/components/useThemes/useThemes";
-import type { UserProfile } from "@/core/services/api/Get/GetUserInfoAdmin";
+import type { UserProfile } from "@/core/services/api/get/getUserInfoAdmin";
 import Link from "next/link";
 import { MobileSidebar } from "./admin-sidebar";
 

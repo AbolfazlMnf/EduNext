@@ -15,10 +15,10 @@ import {
   SkipForward,
   CheckCircle2,
 } from "lucide-react";
-import { CourseDetailData } from "@/core/services/api/Get/GetCourseByID";
-import { GetUserVideoProgress } from "@/core/services/api/Get/GetUserVideoProgress";
+import { CourseDetailData } from "@/core/services/api/get/getCourseByID";
 import { UpdateUserVideoProgress } from "@/core/services/api/post/UpdateUserVideoProgress";
 import { ExamModal } from "./ExamModal";
+import { GetUserVideoProgress } from "@/core/services/api/get/getUserVideoProgress";
 
 interface VideoPlayerProps {
   courseId: string;

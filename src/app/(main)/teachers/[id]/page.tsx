@@ -1,7 +1,7 @@
 import { TeacherDetailClient } from "@/modules/main/Teachers/TeacherDetailClient";
-import { getTeacherById } from "@/core/services/api/Get/GetTeacherById";
 import { notFound } from "next/navigation";
 import { metadataGenerator } from "@/Utils/helper/metadata";
+import { getTeacherById } from "@/core/services/api/get/getTeacherById";
 
 type ApiCourse = {
   _id: string;

@@ -1,10 +1,10 @@
 import { CommentsManagement } from "@/modules/panels/admin/components/comments-management/comments-management";
-import { getAllComments } from "@/core/services/api/Get/GetAllCommentAdmin";
-import { getAllCoursesAdmin } from "@/core/services/api/Get/GetAllCoursesAdmin";
+import { getAllComments } from "@/core/services/api/get/getAllCommentAdmin";
+import { getAllCoursesAdmin } from "@/core/services/api/get/getAllCoursesAdmin";
 import {
   getReplyCommentAdmin,
   MappedReply,
-} from "@/core/services/api/Get/GetReplyCommentAdmin";
+} from "@/core/services/api/get/getReplyCommentAdmin";
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | undefined }>;

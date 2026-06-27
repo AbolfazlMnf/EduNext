@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { AdminSidebar } from "./admin-sidebar";
 import { AdminTopbar } from "./admin-topbar";
-import type { UserProfile } from "@/core/services/api/Get/GetUserInfoAdmin";
+import type { UserProfile } from "@/core/services/api/get/getUserInfoAdmin";
 
 export function AdminShell({
   children,

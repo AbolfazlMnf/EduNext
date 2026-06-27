@@ -8,15 +8,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ICategoriesResponse } from "@/core/services/api/Get/GetAllCategories";
+import {
+  GetAllCategories,
+  ICategoriesResponse,
+} from "@/core/services/api/get/getAllCategories";
 import {
   GetAllLevels,
   ILevelsResponse,
-} from "@/core/services/api/Get/GetAllLevels";
+} from "@/core/services/api/get/getAllLevels";
+
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { GetAllCategories } from "@/core/services/api/Get/GetAllCategories";
 
 const PRICE_OPTIONS = [
   { label: "Free", value: "free" },

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { AdminShell } from "@/modules/panels/admin/components/admin-shell";
-import { getUserInfoAdmin } from "@/core/services/api/Get/GetUserInfoAdmin";
+import { getUserInfoAdmin } from "@/core/services/api/get/getUserInfoAdmin";
 
 export const metadata = {
   title: "Admin",

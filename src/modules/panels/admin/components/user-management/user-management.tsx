@@ -14,7 +14,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { AdminUser, ApiMeta } from "@/core/services/api/Get/GetAllUser";
+import type { AdminUser, ApiMeta } from "@/core/services/api/get/getAllUser";
 import { PaginationComp } from "@/components/PaginationComp";
 import { useState, useEffect, useRef, useTransition, useCallback } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
@@ -25,7 +25,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   getUserById,
   UserByIdApiData,
-} from "@/core/services/api/Get/GetUserById";
+} from "@/core/services/api/get/getUserById";
 import { UserViewModal } from "./modals/userViewModal";
 import { UserManagementDesktopTable } from "./user-management-desktop";
 import { UserManagementMobileCards } from "./user-management-mobile";

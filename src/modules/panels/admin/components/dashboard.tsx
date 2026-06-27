@@ -14,14 +14,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { AdminReportData } from "@/core/services/api/Get/GetAdminReports";
-import type { CoursesPageData } from "@/core/services/api/Get/GetAllCoursesAdmin";
-import type { AdminCategory } from "@/core/services/api/Get/GetAllCategoryAdmin";
-import type { AdminLevel } from "@/core/services/api/Get/GetAllLevelsAdmin";
-import type { AdminTransaction } from "@/core/services/api/Get/GetLatestTransaction";
-import type { AllPaymentsPageData } from "@/core/services/api/Get/GetAllPayment";
-import { UsersPageData } from "@/core/services/api/Get/GetAllUser";
-import { SalesOverviewData } from "@/core/services/api/Get/GetSalesOverview";
+import type { AdminReportData } from "@/core/services/api/get/getAdminReports";
+import type { CoursesPageData } from "@/core/services/api/get/getAllCoursesAdmin";
+import type { AdminCategory } from "@/core/services/api/get/getAllCategoryAdmin";
+import type { AdminLevel } from "@/core/services/api/get/getAllLevelsAdmin";
+import type { AdminTransaction } from "@/core/services/api/get/getLatestTransaction";
+import type { AllPaymentsPageData } from "@/core/services/api/get/getAllPayment";
+import { UsersPageData } from "@/core/services/api/get/getAllUser";
+import { SalesOverviewData } from "@/core/services/api/get/getSalesOverview";
 import {
   Select,
   SelectContent,

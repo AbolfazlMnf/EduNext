@@ -10,9 +10,9 @@ import { useState, useCallback, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
-import type { AllPaymentsPageData } from "@/core/services/api/Get/GetAllPayment";
-import type { AdminTransaction } from "@/core/services/api/Get/GetLatestTransaction";
-import type { SalesOverviewData } from "@/core/services/api/Get/GetSalesOverview";
+import type { AllPaymentsPageData } from "@/core/services/api/get/getAllPayment";
+import type { AdminTransaction } from "@/core/services/api/get/getLatestTransaction";
+import type { SalesOverviewData } from "@/core/services/api/get/getSalesOverview";
 import Lottie from "lottie-react";
 import loading from "@/assets/Lottie/Loader.json";
 import {

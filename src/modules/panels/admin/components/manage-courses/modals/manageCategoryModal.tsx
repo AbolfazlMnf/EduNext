@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { createCategory } from "@/core/services/api/post/createCategory";
 import { deleteCategory } from "@/core/services/api/delete/DeleteCategory";
-import type { AdminCategory } from "@/core/services/api/Get/GetAllCategoryAdmin";
+import type { AdminCategory } from "@/core/services/api/get/getAllCategoryAdmin";
 import {
   Dialog,
   DialogContent,

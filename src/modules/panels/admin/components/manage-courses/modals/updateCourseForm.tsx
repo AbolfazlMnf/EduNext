@@ -15,8 +15,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { AdminCategory } from "@/core/services/api/Get/GetAllCategoryAdmin";
-import type { AdminLevel } from "@/core/services/api/Get/GetAllLevelsAdmin";
+import type { AdminCategory } from "@/core/services/api/get/getAllCategoryAdmin";
+import type { AdminLevel } from "@/core/services/api/get/getAllLevelsAdmin";
 
 export interface UpdateCourseData {
   id?: string;

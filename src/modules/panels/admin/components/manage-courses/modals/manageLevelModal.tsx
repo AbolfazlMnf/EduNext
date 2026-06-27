@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { createLevel } from "@/core/services/api/post/CreateLevel";
 import { deleteLevel } from "@/core/services/api/delete/DeleteLevel";
-import type { AdminLevel } from "@/core/services/api/Get/GetAllLevelsAdmin";
+import type { AdminLevel } from "@/core/services/api/get/getAllLevelsAdmin";
 import {
   Dialog,
   DialogContent,

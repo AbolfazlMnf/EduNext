@@ -4,7 +4,7 @@ import { ChevronRight, Clock } from "lucide-react";
 import Image from "next/image";
 import StarsRate from "../components/Stars";
 import { formatDateEN } from "@/Utils/helper/DateConverter";
-import { ICourseData } from "@/core/services/api/Get/GetAllCourses";
+import { ICourseData } from "@/core/services/api/get/getAllCourses";
 import Link from "next/link";
 
 type props = {

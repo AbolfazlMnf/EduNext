@@ -1,6 +1,6 @@
 import api from "@/core/services/api";
 import { AxiosError } from "axios";
-import { SiteSettingData } from "../Get/GetSiteSetting";
+import { SiteSettingData } from "../get/getSiteSetting";
 
 export interface UpdateSiteSettingPayload {
   siteTitle: string;

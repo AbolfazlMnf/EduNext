@@ -6,7 +6,7 @@ import {
   FadeInItem,
 } from "../../../../modules/main/CourseDetails/MotionWrappers";
 import AddComment from "@/modules/main/CourseDetails/AddComment";
-import { GetCourseByID } from "@/core/services/api/Get/GetCourseByID";
+import { GetCourseByID } from "@/core/services/api/get/getCourseByID";
 import ReviewSection from "@/modules/main/CourseDetails/ReviewSection";
 import RelatedCourses from "@/modules/main/CourseDetails/RelatedCourses";
 import Container from "@/components/container/Container";

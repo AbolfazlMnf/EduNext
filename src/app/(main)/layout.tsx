@@ -1,7 +1,7 @@
 import Navbar from "@/modules/layout/header/views/Navbar";
 import Footer from "@/modules/layout/footer/views/Footer";
 import AIChatModal from "@/components/AiChatModal";
-import { GetSiteSetting } from "@/core/services/api/Get/GetSiteSetting";
+import { GetSiteSetting } from "@/core/services/api/get/getSiteSetting";
 import Maintenance from "@/modules/panels/admin/components/setting/Maintenance";
 
 export default async function MainLayout({

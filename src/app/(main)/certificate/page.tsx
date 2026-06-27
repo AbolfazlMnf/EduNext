@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { GetCertificateByCode } from "@/core/services/api/Get/GetCertificateByCode";
+import { GetCertificateByCode } from "@/core/services/api/get/getCertificateByCode";
 import CertificateDocument from "@/modules/Certificate/CertificateDocument";
 import { metadataGenerator } from "@/Utils/helper/metadata";
 

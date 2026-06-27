@@ -11,7 +11,7 @@ import {
   Shield,
   Star,
 } from "lucide-react";
-import type { CertificateData } from "@/core/services/api/Get/GetCertificateByCode";
+import type { CertificateData } from "@/core/services/api/get/getCertificateByCode";
 
 interface Props {
   certificate: CertificateData;

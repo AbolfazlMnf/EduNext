@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { getCourseComments } from "@/core/services/api/Get/getCourseComments";
+import { getCourseComments } from "@/core/services/api/get/getCourseComments";
 import Empty from "@/assets/Lottie/Empty.json";
 import Lottie from "lottie-react";
 import ReplySection from "./ReplySection";

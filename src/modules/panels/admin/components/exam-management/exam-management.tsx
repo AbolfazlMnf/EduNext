@@ -17,9 +17,9 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { AdminCourse } from "@/core/services/api/Get/GetAllCoursesAdmin";
-import { ApiExam } from "@/core/services/api/Get/GetExamAdmin";
-import { ApiQuestion } from "@/core/services/api/Get/GetQuestionAdmin";
+import { AdminCourse } from "@/core/services/api/get/getAllCoursesAdmin";
+import { ApiExam } from "@/core/services/api/get/getExamAdmin";
+import { ApiQuestion } from "@/core/services/api/get/getQuestionAdmin";
 import { ExamFormModal } from "./modals/ExamFormModal";
 import { QuestionFormModal } from "./modals/QuestionFormModal";
 import { DeleteActionModal } from "./modals/DeleteActionModal";

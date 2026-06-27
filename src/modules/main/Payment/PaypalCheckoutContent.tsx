@@ -12,7 +12,7 @@ import {
   Sparkles,
   Wallet,
 } from "lucide-react";
-import { GetVerifyPayment } from "@/core/services/api/Get/GetVerifyPayment";
+import { GetVerifyPayment } from "@/core/services/api/get/getVerifyPayment";
 
 export default function PaypalCheckoutContent() {
   const searchParams = useSearchParams();
