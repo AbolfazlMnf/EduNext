@@ -17,17 +17,17 @@ function AuthNav({ user }: { user?: IUser }) {
       {user ? (
         <UserMenu user={user} />
       ) : (
-        <div>
+        <div className="flex gap-2">
           <Link href="/auth/login">
             <Button
               variant="secondary"
-              className="shadow-md cursor-pointer py-1 px-5 rounded-md "
+              className="shadow-md cursor-pointer py-1 px-5 rounded-md dark:bg-[#333] "
             >
               Login
             </Button>
           </Link>
-          <Link href="/register">
-            <Button className="bg-[#3d1dbf] cursor-pointer shadow-md text-white py-1 px-5 rounded-md ">
+          <Link href="/auth/register">
+            <Button className="bg-violet-600 hover:bg-violet-700 cursor-pointer shadow-md text-white py-1 px-5 rounded-md ">
               Register
             </Button>
           </Link>

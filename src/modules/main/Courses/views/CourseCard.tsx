@@ -73,7 +73,7 @@ export default function CourseCard({ course, classNames = "" }: props) {
       <CardFooter className="pt-0 pb-4">
         <Link href={`/courses/${course._id}`} className="w-full">
           <Button
-            className="w-full group/btn hover:bg-primary/90 transition-all"
+            className="w-full group/btn hover:bg-violet-700 transition-all bg-violet-600 cursor-pointer"
             size="lg"
           >
             <span>View Details</span>
