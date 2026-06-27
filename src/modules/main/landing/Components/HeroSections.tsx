@@ -70,7 +70,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import HeroCount from "./HeroCount";
-import Container from "@/components/container/Container";
 
 function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
@@ -219,7 +218,7 @@ function HeroSection() {
                 <div className="relative overflow-hidden rounded-[2rem] border border-white/30 bg-white/50 p-3 shadow-[0_30px_80px_rgba(15,23,42,0.14)] backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
                   <div className="relative aspect-[4.6/4.6] w-full overflow-hidden rounded-[1.5rem] bg-slate-100 dark:bg-slate-900">
                     <Image
-                      src="/images/hero.png"
+                      src="/images/hero.PNG"
                       alt="Learn from experts"
                       fill
                       priority
@@ -229,11 +228,11 @@ function HeroSection() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                     <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white/35 to-transparent dark:from-black/20" />
 
-                    <motion.div
+                    {/* <motion.div
                       aria-hidden="true"
                       className="absolute inset-y-0 left-[-35%] w-2/5 rotate-12 bg-gradient-to-r from-transparent via-white/35 to-transparent blur-2xl"
                       animate={shimmerMotion}
-                    />
+                    /> */}
 
                     <motion.div
                       className="absolute left-4 top-4 rounded-2xl border border-white/25 bg-white/80 px-4 py-3 text-slate-900 shadow-lg backdrop-blur-md dark:bg-black/40 dark:text-white"
