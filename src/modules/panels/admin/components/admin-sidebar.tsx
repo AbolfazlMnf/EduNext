@@ -10,6 +10,19 @@ import { adminNavItems, logoutNavItem } from "../utils/nav";
 import AdminProfileModal from "./AdminProfileModal";
 import type { UserProfile } from "@/core/services/api/get/getUserInfoAdmin";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { logOut } from "@/modules/layout/header/services/index";
 
 function NavList({
   mobile = false,
@@ -24,6 +37,20 @@ function NavList({
   const displayName = user?.name || "Admin User";
   const displayRole = user?.role?.join(" , ") || "Admin";
   const initials = displayName.substring(0, 2).toUpperCase();
+
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    await logOut(router);
+
+    setIsLoading(false);
+    setIsOpen(false);
+  };
 
   return (
     <div className="flex h-full flex-col ">
@@ -92,16 +119,51 @@ function NavList({
           </div>
         </div>
 
-        <Button
-          asChild
-          variant="outline"
-          className="h-11 w-full justify-start rounded-2xl  bg-white/80 dark:bg-[#454545]"
-        >
-          <Link className="dark:text-[#ccc] " href={logoutNavItem.href}>
-            <logoutNavItem.icon className="mr-2 h-4 w-4 dark:text-[#ccc]" />
-            {logoutNavItem.label}
-          </Link>
-        </Button>
+        <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="outline"
+              className="h-11 w-full justify-start rounded-2xl bg-white/80 dark:bg-[#454545] cursor-pointer"
+            >
+              <logoutNavItem.icon className="mr-2 h-4 w-4 dark:text-[#ccc]" />
+              <p className="text-[black] dark:text-[#ccc]">Log out</p>
+            </Button>
+          </AlertDialogTrigger>
+
+          <AlertDialogContent className="rounded-3xl border-white/70 dark:bg-[#333]">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action will log you out of your account. You will need to
+                login again to access your dashboard.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+
+            <AlertDialogFooter>
+              <AlertDialogCancel
+                className="cursor-pointer"
+                disabled={isLoading}
+              >
+                Cancel
+              </AlertDialogCancel>
+
+              <Button
+                className=" !bg-rose-600 !text-white hover:!bg-rose-700 !cursor-pointer"
+                disabled={isLoading}
+                onClick={handleLogout}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className=" h-4 w-4 animate-spin" />
+                    Logging out...
+                  </>
+                ) : (
+                  "Log out"
+                )}
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

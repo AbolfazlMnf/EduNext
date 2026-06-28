@@ -51,7 +51,7 @@ function SuccessContent() {
 
         <div className="flex flex-col gap-3">
           <Link
-            href="/userPanel/courses"
+            href="/panels/user/user-courses"
             className="w-full bg-[#6d28d9] text-white font-semibold py-3 px-4 rounded-xl  transition-colors"
           >
             Go to My Courses

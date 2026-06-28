@@ -70,7 +70,10 @@ export function DeleteCourseModal({
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel className="rounded-2xl" disabled={isPending}>
+          <AlertDialogCancel
+            className="rounded-2xl cursor-pointer"
+            disabled={isPending}
+          >
             Cancel
           </AlertDialogCancel>
 
