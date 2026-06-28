@@ -24,6 +24,12 @@ export default function CertificateDocument({ certificate }: Props) {
 
   const handlePrint = () => window.print();
 
+  const courseTitle =
+    certificate.course?.title ??
+    "This course was removed by the site administrator";
+
+  const courseImage = certificate.course?.courseImage ?? null;
+
   return (
     <main className="min-h-screen dark:bg-none dark:bg-[#0E0B24] bg-[radial-gradient(circle_at_top,_rgba(100,77,179,0.18),_transparent_32%),linear-gradient(180deg,_#f6f1fb_0%,_#ece6f5_100%)] flex items-start justify-center px-3 py-8 sm:px-4 sm:py-10 md:py-12 lg:px-4 lg:py-16 print:bg-white print:block print:p-0">
       <button
@@ -200,7 +206,7 @@ export default function CertificateDocument({ certificate }: Props) {
                   has successfully completed the course requirements and passed
                   the final assessment for
                   <strong className="font-bold text-[#0E0B24]">
-                    &ldquo;{certificate.course.title}&rdquo;
+                    &ldquo;{courseTitle}&rdquo;
                   </strong>
                 </p>
 
@@ -315,19 +321,42 @@ export default function CertificateDocument({ certificate }: Props) {
                 </div>
 
                 <div className="relative w-full overflow-hidden rounded-2xl border-[5px] border-white shadow-[0_16px_48px_rgba(14,11,36,0.22)] aspect-[3/4]">
-                  <Image
+                  {/* <Image
                     src={certificate.course.courseImage}
                     alt={certificate.course.title}
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 224px"
-                  />
+                  /> */}
+                  {courseImage ? (
+                    <Image
+                      src={courseImage}
+                      alt={courseTitle}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 224px"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-[#F4EEDD] px-4 text-center">
+                      <p className="text-sm font-semibold text-[#6B5A2B]">
+                        This course was removed by the site administrator.
+                      </p>
+                    </div>
+                  )}
+
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0E0B24]/70 via-[#0E0B24]/10 to-transparent" />
                   <div className="absolute top-2.5 left-2.5 rounded-full bg-white/90 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.25em] text-[#0E0B24]">
                     Certified
                   </div>
                   <p className="absolute bottom-3 left-3 right-3 text-white/90 text-[11px] font-semibold leading-snug line-clamp-2">
-                    {certificate.course.title}
+                    {courseTitle}
+                  </p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E0B24]/70 via-[#0E0B24]/10 to-transparent" />
+                  <div className="absolute top-2.5 left-2.5 rounded-full bg-white/90 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.25em] text-[#0E0B24]">
+                    Certified
+                  </div>
+                  <p className="absolute bottom-3 left-3 right-3 text-white/90 text-[11px] font-semibold leading-snug line-clamp-2">
+                    {courseTitle}
                   </p>
                 </div>
 
