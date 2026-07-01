@@ -355,7 +355,7 @@ function HeroSection({ data }: { data: ILandingData | null }) {
       </section>
 
       <div className="relative z-20 px-6 lg:px-20 -mt-10 pb-16 ">
-        <div className="mx-auto max-w-5xl rounded-2xl border border-slate-200/60 bg-white/80 mt-5 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-[#0b0b0f]/80">
+        <div className="mx-auto  rounded-2xl mt-6 md:mt-5 ">
           <HeroCount data={data} />
         </div>
       </div>

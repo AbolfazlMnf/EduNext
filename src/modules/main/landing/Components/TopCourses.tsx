@@ -95,7 +95,9 @@ async function TopCourses() {
                 <CourseCard course={item} classNames="w-full" key={index} />
               ))
             ) : (
-              <p className="mx-auto text-center font-bold">No Courses</p>
+              <div className="w-full ">
+                <p className="font-bold">No Courses</p>
+              </div>
             )}
           </div>
         </div>

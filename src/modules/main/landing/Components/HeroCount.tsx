@@ -4,25 +4,35 @@ import { ILandingData } from "./HeroSections";
 
 function HeroCount({ data }: { data: ILandingData | null }) {
   return (
-    <div className="flex lg:flex-row flex-col py-2  lg:px-10 justify-center lg:justify-between items-center dark:bg-[#333] rounded-2xl">
-      <div className="flex gap-3 items-center  ">
-        <h1 className=" text-[24px] lg:text-[32px] font-bold text-violet-600 ">
-          <CountUp end={data?.totalStudents ?? 0} duration={11} />
-        </h1>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="rounded-2xl bg-white dark:bg-zinc-900 shadow-sm border border-zinc-200 dark:border-zinc-800 p-6 flex flex-col items-center justify-center">
+        <h2 className="text-4xl font-extrabold text-violet-600">
+          <CountUp end={data?.totalStudents ?? 0} duration={3} />+
+        </h2>
 
-        <h3 className="lg:text-[22px]  ">Students Enrolled</h3>
+        <p className="mt-2 text-zinc-600 dark:text-zinc-400 font-medium">
+          Students Enrolled
+        </p>
       </div>
-      <div className="flex gap-3 items-center border-y-2 lg:border-y-0 lg:border-x-2 border-[#dddd] py-2 lg:py-0 lg:px-10 ">
-        <h1 className="text-[24px] lg:text-[32px] font-bold text-violet-600 ">
-          <CountUp end={data?.totalTeachers ?? 0} duration={11} />+
-        </h1>
-        <h3 className="lg:text-[22px]">Expert Instructors</h3>
+
+      <div className="rounded-2xl bg-white dark:bg-zinc-900 shadow-sm border border-zinc-200 dark:border-zinc-800 p-6 flex flex-col items-center justify-center">
+        <h2 className="text-4xl font-extrabold text-violet-600">
+          <CountUp end={data?.totalTeachers ?? 0} duration={3} />+
+        </h2>
+
+        <p className="mt-2 text-zinc-600 dark:text-zinc-400 font-medium">
+          Expert Instructors
+        </p>
       </div>
-      <div className="flex gap-3 items-center ">
-        <h1 className="text-[24px] lg:text-[32px] font-bold text-violet-600 ">
-          <CountUp end={data?.totalCourses ?? 0} duration={11} />+
-        </h1>
-        <h3 className="lg:text-[22px]">Courses</h3>
+
+      <div className="rounded-2xl bg-white dark:bg-zinc-900 shadow-sm border border-zinc-200 dark:border-zinc-800 p-6 flex flex-col items-center justify-center">
+        <h2 className="text-4xl font-extrabold text-violet-600">
+          <CountUp end={data?.totalCourses ?? 0} duration={3} />+
+        </h2>
+
+        <p className="mt-2 text-zinc-600 dark:text-zinc-400 font-medium">
+          Courses
+        </p>
       </div>
     </div>
   );
