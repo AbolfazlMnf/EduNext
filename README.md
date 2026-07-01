@@ -42,7 +42,7 @@ To run this project on your local machine:
 1. Clone the repository:
    
    ```bash
-   git clone https://github.com/AbolfazlMnf/EduNext.git
+   git clone https://github.com/Edu-Next-Org/EduNext.git
    cd EduNext
    ```
    
