@@ -101,19 +101,28 @@ export const EnrollCard: React.FC<EnrollCardProps> = ({
   const handleBuyNow = () => {
     startPaymentTransition(async () => {
       try {
-        const paymentUrl = await RequestPayment(courseId);
+        const result = await RequestPayment(courseId);
 
-        if (paymentUrl) {
-          router.push(paymentUrl);
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          toast.error(error.message);
+        if (result.success && result.paymentUrl) {
+          router.push(result.paymentUrl);
         } else {
           toast.error(
-            "An unexpected error occurred while connecting to the payment gateway.",
+            result.message ||
+              "An error occurred while connecting to the payment gateway",
           );
         }
+      } catch (error) {
+        if (
+          typeof error === "object" &&
+          error !== null &&
+          ("digest" in error || (error as Error).message === "NEXT_REDIRECT")
+        ) {
+          throw error;
+        }
+
+        toast.error(
+          "An unexpected error occurred while processing your request",
+        );
       }
     });
   };

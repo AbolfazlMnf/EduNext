@@ -1,35 +1,35 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { apiFetch, IError } from "@/core/Fetch";
+
+interface PaymentApiResponse {
+  success: boolean;
+  message?: string;
+  data?: {
+    paymentUrl: string;
+    token: string;
+  };
+}
 
 export async function RequestPayment(courseId: string) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("accessToken")?.value;
+  const response = await apiFetch<PaymentApiResponse>("/payments/request", {
+    method: "POST",
+    body: { courseId },
+    cache: "no-store",
+  });
 
-  if (!token) {
-    throw new Error("Please log in to your account first.");
+  if (response && typeof response === "object" && "errorMessage" in response) {
+    return { success: false, message: response.errorMessage };
   }
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/payments/request`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ courseId }),
-      cache: "no-store",
-    },
-  );
+  const apiRes = response as PaymentApiResponse;
 
-  const result = await response.json();
-
-  if (!response.ok || !result.success || !result.data?.paymentUrl) {
-    throw new Error(
-      result.message || "Failed to connect to the payment gateway.",
-    );
+  if (apiRes?.success && apiRes?.data?.paymentUrl) {
+    return { success: true, paymentUrl: apiRes.data.paymentUrl };
   }
 
-  return result.data.paymentUrl;
+  return {
+    success: false,
+    message: apiRes?.message || "Failed to connect to the payment gateway",
+  };
 }

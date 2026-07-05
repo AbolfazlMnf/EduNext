@@ -92,12 +92,15 @@ export async function apiFetch<T>(
 
     return (await res.text()) as T;
   } catch (error: unknown) {
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "digest" in error &&
-      (error as { digest: string }).digest === "NEXT_REDIRECT"
-    ) {
+    const isRedirect =
+      (error instanceof Error && error.message.includes("NEXT_REDIRECT")) ||
+      (typeof error === "object" &&
+        error !== null &&
+        "digest" in error &&
+        typeof (error as any).digest === "string" &&
+        (error as any).digest.includes("NEXT_REDIRECT"));
+
+    if (isRedirect) {
       throw error;
     }
 

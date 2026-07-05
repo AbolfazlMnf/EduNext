@@ -46,23 +46,38 @@ export default function CreateReplyModal({
     { resetForm, setSubmitting }: FormikHelpers<ReplyFormValues>,
   ) => {
     try {
-      await createCommentReply({
+      const result = await createCommentReply({
         commentId,
         courseId,
         content: values.message,
       });
 
-      await queryClient.invalidateQueries({
-        queryKey: ["replies", commentId],
-      });
+      if (result.success) {
+        await queryClient.invalidateQueries({
+          queryKey: ["replies", commentId],
+        });
 
-      toast.success("Your reply was submitted successfully");
-
-      resetForm();
-      setIsReplyOpen(false);
+        toast.success("Your reply was submitted successfully");
+        resetForm();
+        setIsReplyOpen(false);
+      } else {
+        toast.error(result.message || "Failed to submit reply");
+      }
     } catch (error: unknown) {
+      const isRedirect =
+        (error instanceof Error && error.message.includes("NEXT_REDIRECT")) ||
+        (typeof error === "object" &&
+          error !== null &&
+          "digest" in error &&
+          typeof (error as { digest: string }).digest === "string" &&
+          (error as { digest: string }).digest.includes("NEXT_REDIRECT"));
+
+      if (isRedirect) {
+        throw error;
+      }
+
       const message =
-        error instanceof Error ? error.message : "Failed to submit reply.";
+        error instanceof Error ? error.message : "Failed to submit reply";
       toast.error(message);
     } finally {
       setSubmitting(false);
@@ -135,7 +150,7 @@ export default function CreateReplyModal({
                       resetForm();
                       setIsReplyOpen(false);
                     }}
-                    className="dark:bg-transparent dark:text-gray-300 dark:hover:bg-gray-800"
+                    className="dark:bg-transparent dark:text-gray-300 dark:hover:bg-gray-800 !cursor-pointer"
                   >
                     Cancel
                   </Button>
@@ -143,7 +158,7 @@ export default function CreateReplyModal({
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-purple-600 hover:bg-purple-700 text-white min-w-[100px]"
+                    className="bg-purple-600 hover:bg-purple-700 text-white min-w-[100px] !cursor-pointer"
                   >
                     {isSubmitting ? "Sending..." : "Send Reply"}
                   </Button>

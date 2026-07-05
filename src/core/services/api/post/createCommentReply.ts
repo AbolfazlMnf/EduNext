@@ -1,9 +1,7 @@
 "use server";
 
-import api from "@/core/services/api";
-import { isAxiosError } from "axios";
-import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { apiFetch } from "@/core/Fetch";
 
 export interface CreateReplyUser {
   _id: string;
@@ -35,29 +33,28 @@ export async function createCommentReply({
   commentId,
   courseId,
   content,
-}: CreateReplyPayload): Promise<CreateReplyResponse> {
-  try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("accessToken")?.value;
+}: CreateReplyPayload) {
+  const response = await apiFetch<CreateReplyResponse>(
+    `/replies/${commentId}`,
+    {
+      method: "POST",
+      body: { content },
+    },
+  );
 
-    const response = await api.post<CreateReplyResponse>(
-      `/replies/${commentId}`,
-      { content },
-      {
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-      },
-    );
-
-    revalidatePath(`/coursedetail/${courseId}`);
-
-    return response.data;
-  } catch (error: unknown) {
-    if (isAxiosError(error)) {
-      throw new Error(
-        error.response?.data?.message ??
-          "Failed to submit reply. Please try again.",
-      );
-    }
-    throw new Error("An unexpected error occurred while submitting the reply.");
+  if (response && typeof response === "object" && "errorMessage" in response) {
+    return { success: false, message: response.errorMessage };
   }
+
+  const apiRes = response as CreateReplyResponse;
+
+  if (apiRes?.success) {
+    revalidatePath(`/coursedetail/${courseId}`);
+    return { success: true, message: apiRes.message, data: apiRes.data };
+  }
+
+  return {
+    success: false,
+    message: "Failed to submit reply. Please try again",
+  };
 }
