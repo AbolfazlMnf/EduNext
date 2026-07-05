@@ -123,7 +123,7 @@ export default function AddComment({ courseId }: AddCommentProps) {
             ${mutation.isPending ? "opacity-70 cursor-not-allowed" : "cursor-pointer"}
           `}
         >
-          {mutation.isPending ? "Submitting..." : "Submit Answer"}
+          {mutation.isPending ? "Submitting..." : "Submit Comment"}
         </Button>
       </form>
     </div>
