@@ -35,7 +35,7 @@ export default function ContactUsView() {
             {
               icon: Mail,
               title: "Email 1",
-              value: "rezakazemi1381@yahoo.com",
+              value: "rezakazemi13819731@gmail.com",
             },
             {
               icon: Mail,
